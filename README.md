@@ -60,51 +60,54 @@ options can be:
 options:{
 		account:{
 			email:/*String*/,
-			password:"password"
+			password:/*String*/
 		},
 		staff:[
 		{
-			FirstName:"Angelina",
-			LastName:"Julie",
-			Email:"example@"
+			FirstName:/*String*/,
+			LastName:/*String*/,
+			Email:"/*String*/"
 		}
 		],
 		company:{
-			name:companyName
+			name:/*String*/
 		},
 		services:[{
-			name:"Service 1",
-			price:30,
-			duration:60
+			name:/*String*/,
+			price:/*Int*/,
+			duration:/*Int*/
 		},
 		{
-			name:"Service 2",
-			duration:120,
-			price:45
+			name:/*String*/,
+			price:/*Int*/,
+			duration:/*Int*/
 		}],
 		buttons:[
 		{
-			name:'Book an appoitment'
+			name:/*String*/
 		}]
 		,
 		clients:[
 		{
-			firstName:'Robert',
-			lastName:'Raford',
+			firstName:/*String*/,
+			lastName:/*String*/,
 			address:{
-				street:'37-3 Main St, Flushing',
-				zipCode:'11354',
-				city:'New York',
-				country:'United States'
+				street:/*String*/,
+				zipCode:/*String*/,
+				city:/*String*/,
+				country:/*String*/
 			},
 			emailAddresses:[
 			{
-				primary:true,
-				email:'robertrafprd@example.com'
+				primary:/*Boolean*/,
+				email:/*String*/
 			}]
 		}],
-		appointments:[todayAppointmentDate,tomorrowAppointmentDate],
-		paymentProfile:paymentProfile
+		appointments:[/*Date*/,/*Date*/],
+		paymentProfile:{
+			nativePlan:/*Boolean*/,
+			id:/*Int*/
+		}
 	}
 }
 ```
