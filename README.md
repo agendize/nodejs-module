@@ -151,14 +151,17 @@ Note that according to Agendize objects management:
 * appointments creation need staff, service and client.
 
 #### Check if an email is already used
-```agendizeApi.checkIfAccountExist(options,function(error,result){
+```
+agendizeApi.checkIfAccountExist(options,function(error,result){
 
-})```
+})
+```
 with required option:
 ```
 options = {
 	email:'email_of_the_account@email.com'
 }
+
 ```
 `result` is set to `true`, or `false`, depending on if the email is known, or not, by Agendize.
 
