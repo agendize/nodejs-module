@@ -1,23 +1,37 @@
 # Agendize NPM Module
 
-## 1. Overview
+## Overview
 This is a node.js module to interact with Agendize APIs. Agendize API documentation is available here: http://developers.agendize.com/. 
 
-## 2. Features
-** Reseller Scope **
+## Features
+### Authentication
+This module handles both partner authentication and application oAuth2 authentication modes.
+
+### Reseller Scope
+You can manage multiple accounts under a partner Agendize account.
+
 * Create accounts
 * Check if an email is already used
 * Desactive an account
 * Change the plan of an account
 
-** Account Scope **
+### Account Scope
+You can deal with Agendize convertion tools
+#### Online Scheduling
 * Get account information
 * Get Companies of an account
 * Get Clients of an account
 * Get Staffs of a company
 * Create appointment
+#### Click to call
+* Make a click-to-call call 
 
-## 3. Prerequisites:
+## Prerequisites
+Have an Agendize Account
+Requesting your API key to our wonderful Support team
 
+if you are a partner distributing Agendize accounts, you also need to request a SSO Token to our support team.
+
+Finally understand how Agendize objects are working together. What is an Account? a Company, Service, Staff, Client or Appointment. 
 
 
