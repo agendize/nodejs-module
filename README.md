@@ -3,10 +3,9 @@
 ## Summary
 * [Overview](#markdown-header-overview)
 * [Features](#markdown-header-features)
-  * [Authentication](#markdown-header-Features)
-  * [Reseller API](#markdown-header-Reseller)
-  * [Account API](#markdown-header-Account)
-  * [Online Scheduling API](#markdown-header-Online)
+    * [Reseller API](#markdown-header-reseller)
+    * [Account API](#markdown-header-Account)
+    * [Online Scheduling API](#markdown-header-Online)
 
 ##Overview
 This is a node.js module to interact with Agendize APIs. Agendize API documentation is available here: http://developers.agendize.com/. 
