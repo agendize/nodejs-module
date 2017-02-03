@@ -1,5 +1,8 @@
 # Agendize NPM Module
 
+## Summary
+ [this section](#1)
+
 ## Overview
 This is a node.js module to interact with Agendize APIs. Agendize API documentation is available here: http://developers.agendize.com/. 
 
@@ -28,11 +31,11 @@ You can manage multiple accounts under a partner Agendize account.
 * Make a click-to-call call 
 
 ## Prerequisites
-Have an Agendize Account
-Requesting your API key to our wonderful Support team
+* Have an Agendize Account
+* Requesting your API key to our wonderful Support team
 
-if you are a partner distributing Agendize accounts, you also need to request a SSO Token to our support team.
+- if you are a partner distributing Agendize accounts, you also need to request a SSO Token to our support team.
 
-Finally understand how Agendize objects are working together. What is an Account? a Company, Service, Staff, Client or Appointment. 
+* Finally understand how Agendize objects are working together. What is an Account? a Company, Service, Staff, Client or Appointment. 
 
 
