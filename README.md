@@ -12,6 +12,15 @@ This module handles both partner authentication and application oAuth2 authentic
     * [Account API](#markdown-header-account)
     * [Online Scheduling API](#markdown-header-online)
 
+## Prerequisites
+* Have an Agendize Account
+* Requesting your API key to our wonderful Support team
+
+- if you are a partner distributing Agendize accounts, you also need to request a SSO Token to our support team.
+
+* Finally understand how Agendize objects are working together. What is an Account? a Company, Service, Staff, Client or Appointment. 
+
+
 ##Installation
 `npm install -g agendize`
 
@@ -144,25 +153,18 @@ Note that according to Agendize objects management:
 * appointments creation need staff, service and client.
 
 #### Check if an email is already used
-* Desactive an account
-* Change the plan of an account
+#### Desactive an account
+#### Change the plan of an account
 
 ###Account API
-* Get account information
+#### Get account information
 
 ###Online Scheduling API
-* Get Companies of an account
-* Get Clients of an account
-* Get Staffs of a company
-* Create appointment
+#### Get Companies of an account
+#### Get Clients of an account
+#### Get Staffs of a company
+#### Create appointment
 
 ### Click to call API
-* Make a click-to-call call 
+#### Make a click-to-call call 
 
-## Prerequisites
-* Have an Agendize Account
-* Requesting your API key to our wonderful Support team
-
-- if you are a partner distributing Agendize accounts, you also need to request a SSO Token to our support team.
-
-* Finally understand how Agendize objects are working together. What is an Account? a Company, Service, Staff, Client or Appointment. 
