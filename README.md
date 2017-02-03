@@ -7,7 +7,7 @@ This is a node.js module to interact with Agendize APIs. Agendize API documentat
 ### Authentication
 This module handles both partner authentication and application oAuth2 authentication modes.
 
-### Reseller Scope
+### Reseller API
 You can manage multiple accounts under a partner Agendize account.
 
 * Create accounts
@@ -15,15 +15,16 @@ You can manage multiple accounts under a partner Agendize account.
 * Desactive an account
 * Change the plan of an account
 
-### Account Scope
-You can deal with Agendize convertion tools
-#### Online Scheduling
+### Account API
 * Get account information
+
+### Online Scheduling API
 * Get Companies of an account
 * Get Clients of an account
 * Get Staffs of a company
 * Create appointment
-#### Click to call
+
+### Click to call API
 * Make a click-to-call call 
 
 ## Prerequisites
