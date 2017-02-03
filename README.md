@@ -59,58 +59,62 @@ options can be:
 ```
 options:{
 		account:{
-			email:/*String*/,
-			password:/*String*/
+			email:String,
+			password:String
 		},
 		staff:[
 		{
-			FirstName:/*String*/,
-			LastName:/*String*/,
+			FirstName:String,
+			LastName:String,
 			Email:String
 		}
 		],
 		company:{
-			name:/*String*/
+			name:String
 		},
 		services:[{
-			name:/*String*/,
-			price:/*Int*/,
-			duration:/*Int*/
+			name:String,
+			price:Int,
+			duration:Int
 		},
 		{
-			name:/*String*/,
-			price:/*Int*/,
-			duration:/*Int*/
+			name:String,
+			price:Int,
+			duration:Int
 		}],
 		buttons:[
 		{
-			name:/*String*/
+			name:String
 		}]
 		,
 		clients:[
 		{
-			firstName:/*String*/,
-			lastName:/*String*/,
+			firstName:String,
+			lastName:String,
 			address:{
-				street:/*String*/,
-				zipCode:/*String*/,
-				city:/*String*/,
-				country:/*String*/
+				street:String,
+				zipCode:String,
+				city:String,
+				country:String
 			},
 			emailAddresses:[
 			{
-				primary:/*Boolean*/,
-				email:/*String*/
+				primary:Boolean,
+				email:String
 			}]
 		}],
-		appointments:[/*Date*/,/*Date*/],
+		appointments:[Date,Date],
 		paymentProfile:{
-			nativePlan:/*Boolean*/,
-			id:/*Int*/
+			nativePlan:Boolean,
+			id:Int
 		}
 	}
 }
 ```
+
+Note that according to Agendize objects management:
+- buttons creation need company
+- appointments creation need staff, service and client.
 
 * Check if an email is already used
 * Desactive an account
