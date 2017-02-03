@@ -1,17 +1,9 @@
 # Agendize NPM Module
 
 ## Summary
- [Reseller](###markdown-header-Reseller API)
-#Headline1
-// the id for this headline would be "markdown-header-headline1"
+* [Overview](#markdown-header-overview)
+* [Features](#markdown-header-Features)
 
-##Headline2
-// the id for this headline would be "markdown-header-headline2"
-
-
-you cloud use this anchors:
-[myAnchor1](#markdown-header-headline1)
-[myAnchor2](#markdown-header-headline2)
 
 ## Overview
 This is a node.js module to interact with Agendize APIs. Agendize API documentation is available here: http://developers.agendize.com/. 
