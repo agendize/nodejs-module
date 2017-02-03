@@ -37,5 +37,3 @@ You can manage multiple accounts under a partner Agendize account.
 - if you are a partner distributing Agendize accounts, you also need to request a SSO Token to our support team.
 
 * Finally understand how Agendize objects are working together. What is an Account? a Company, Service, Staff, Client or Appointment. 
-
-
