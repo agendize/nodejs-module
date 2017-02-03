@@ -151,9 +151,9 @@ Note that according to Agendize objects management:
 * appointments creation need staff, service and client.
 
 #### Check if an email is already used
-`agendizeApi.checkIfAccountExist(options,function(error,callback){
+```agendizeApi.checkIfAccountExist(options,function(error,result){
 
-})` 
+})```
 with required option:
 ```
 options = {
@@ -163,6 +163,17 @@ options = {
 `result` is set to `true`, or `false`, depending on if the email is known, or not, by Agendize.
 
 #### Desactive an account
+```agendizeApi.
+		agendizeFunction:desactiveAccount(options,function(error,result){
+
+})
+```
+with required option:
+```
+options = {
+	account_id:Int
+}
+```
 #### Change the plan of an account
 
 ###Account API
