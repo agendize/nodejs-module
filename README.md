@@ -38,6 +38,30 @@ var options = {
 }
 var agendizeApi = new Agendize(options)
 ```
+##How it works
+Most of the functions available will have the form:
+```
+agendizeAPI.doSomethingWith(options,callback);
+```
+**options**
+options is the input of the function and is discribed into each function description.
+
+**callback**
+
+Callback object if an asynchronously called function with error and result objects.
+
+```agendizeApi.createAccount(options,function(error,result){
+	if(error){
+		//do something with the error
+	}else{
+		//do something with the result
+	}
+})
+```  
+
+result object will contain the resulted created objects depending on the options parameter. See Agendize developers documentation for each resource body. 
+
+Error object
 
 ##Available Functions
  
@@ -111,16 +135,6 @@ options:{
 		}
 	}
 }
-```
-and callback a asynchronously called function with error and result objects.
-`agendizeApi.createAccount(options,function(error,result){
-	if(error){
-		//do something with the error
-	}else{
-		//do something with the result
-	}
-})` 
-
 
 Note that according to Agendize objects management:
 * buttons creation need company
