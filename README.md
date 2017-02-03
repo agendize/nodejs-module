@@ -5,7 +5,7 @@ This is a node.js module to interact with Agendize APIs. Agendize API documentat
 This module handles both partner authentication and application oAuth2 authentication modes.
 
 ## Summary
-* [Installation](#markdown-header-installation)
+* <a href="https://www.npmjs.com/package/agendize#how-it-works">How it works</a>
 * [Initialization](#markdown-header-initialization)
 * [Available Functions](#markdown-header-available)
     * [Reseller API](#markdown-header-reseller)
@@ -194,8 +194,8 @@ options = {
 ```
 `result` is the updated account resource.
 
-
 ###Account API
+
 #### Get account information
 
 ###Online Scheduling API
