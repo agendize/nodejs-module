@@ -1,16 +1,16 @@
 # Agendize NPM Module
 
 ## Summary
-* [Overview](#markdown-header-overview)
-* [Features](#markdown-header-features)
-    * [Reseller API](#markdown-header-reseller)
-    * [Account API](#markdown-header-Account)
-    * [Online Scheduling API](#markdown-header-Online)
+* [Overview](#markdown-header1-overview)
+* [Features](#markdown-header1-features)
+    * [Reseller API](#markdown-header1-reseller)
+    * [Account API](#markdown-header-account)
+    * [Online Scheduling API](#markdown-header-online)
 
-##Overview
+##1 Overview
 This is a node.js module to interact with Agendize APIs. Agendize API documentation is available here: http://developers.agendize.com/. 
 
-##Features
+##2 Features
 ### Authentication
 This module handles both partner authentication and application oAuth2 authentication modes.
  
