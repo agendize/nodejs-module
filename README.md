@@ -167,7 +167,7 @@ options = {
 
 #### Desactive an account
 ```agendizeApi.
-		agendizeFunction:desactiveAccount(options,function(error,result){
+		agendizeFunction:desactiveAccount(options,function(error){
 
 })
 ```
@@ -177,7 +177,24 @@ options = {
 	account_id:Int
 }
 ```
+
+
 #### Change the plan of an account
+```
+agendizeApi.changePlan(options,function(error,result){
+
+})
+```
+with required option:
+```
+options = {
+	account_id:Int,
+	destination_plan:Int
+}
+
+```
+`result` is the updated account resource.
+
 
 ###Account API
 #### Get account information
