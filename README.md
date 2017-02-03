@@ -3,16 +3,19 @@
 ## Summary
 * [Overview](#markdown-header-overview)
 * [Features](#markdown-header-Features)
+  * [Authentication](#markdown-header-Features)
+  * [Reseller API](#markdown-header-Reseller)
+  * [Account API](#markdown-header-Account)
+  * [Online Scheduling API](#markdown-header-Online)
 
-
-## Overview
+##Overview
 This is a node.js module to interact with Agendize APIs. Agendize API documentation is available here: http://developers.agendize.com/. 
 
-## Features
+##Features
 ### Authentication
 This module handles both partner authentication and application oAuth2 authentication modes.
  
-### [id]Reseller API
+###Reseller API
 You can manage multiple accounts under a partner Agendize account.
 
 * Create accounts
@@ -20,10 +23,10 @@ You can manage multiple accounts under a partner Agendize account.
 * Desactive an account
 * Change the plan of an account
 
-### Account API
+###Account API
 * Get account information
 
-### Online Scheduling API
+###Online Scheduling API
 * Get Companies of an account
 * Get Clients of an account
 * Get Staffs of a company
