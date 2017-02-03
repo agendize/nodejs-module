@@ -1,4 +1,6 @@
 # Agendize NPM Module
+ ==============================
+
 This is a node.js module to interact with Agendize APIs. Agendize API documentation is available here: http://developers.agendize.com/. 
 This module handles both partner authentication and application oAuth2 authentication modes.
 
