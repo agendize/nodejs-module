@@ -1,7 +1,7 @@
 # Agendize NPM Module
 
 ## Summary
- [this section](#1)
+ [Reseller](###1)
 
 ## Overview
 This is a node.js module to interact with Agendize APIs. Agendize API documentation is available here: http://developers.agendize.com/. 
