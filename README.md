@@ -143,7 +143,7 @@ Note that according to Agendize objects management:
 * buttons creation need company
 * appointments creation need staff, service and client.
 
-* Check if an email is already used
+#### Check if an email is already used
 * Desactive an account
 * Change the plan of an account
 
