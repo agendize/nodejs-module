@@ -2,6 +2,16 @@
 
 ## Summary
  [Reseller](###markdown-header-Reseller API)
+#Headline1
+// the id for this headline would be "markdown-header-headline1"
+
+##Headline2
+// the id for this headline would be "markdown-header-headline2"
+
+
+you cloud use this anchors:
+[myAnchor1](#markdown-header-headline1)
+[myAnchor2](#markdown-header-headline2)
 
 ## Overview
 This is a node.js module to interact with Agendize APIs. Agendize API documentation is available here: http://developers.agendize.com/. 
@@ -9,8 +19,8 @@ This is a node.js module to interact with Agendize APIs. Agendize API documentat
 ## Features
 ### Authentication
 This module handles both partner authentication and application oAuth2 authentication modes.
-
-### Reseller API
+ 
+### [id]Reseller API
 You can manage multiple accounts under a partner Agendize account.
 
 * Create accounts
