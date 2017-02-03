@@ -66,7 +66,7 @@ options:{
 		{
 			FirstName:/*String*/,
 			LastName:/*String*/,
-			Email:"/*String*/"
+			Email:String
 		}
 		],
 		company:{
