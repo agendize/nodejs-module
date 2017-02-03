@@ -47,13 +47,14 @@ agendizeAPI.doSomethingWith(options,callback);
 
 * callback object is an asynchronously called function with error and result objects.
 
-```agendizeApi.createAccount(options,function(error,result){
+``` agendizeApi.createAccount(options,function(error,result){
 	if(error){
 		//do something with the error
 	}else{
 		//do something with the result
 	}
 })
+
 ```  
 
 result object will contain the resulted created objects depending on the options parameter. See Agendize developers documentation for each resource body. 
