@@ -5,12 +5,13 @@ This is a node.js module to interact with Agendize APIs. Agendize API documentat
 This module handles both partner authentication and application oAuth2 authentication modes.
 
 ## Summary
-* <a href="https://www.npmjs.com/package/agendize#how-it-works">How it works</a>
-* [Initialization](#markdown-header-initialization)
-* [Available Functions](#markdown-header-available)
-    * [Reseller API](#markdown-header-reseller)
-    * [Account API](#markdown-header-account)
-    * [Online Scheduling API](#markdown-header-online)
+* <a href="https://www.npmjs.com/package/prerequisites">Prerequisites</a>
+* <a href="https://www.npmjs.com/package/agendize#installation">Installation</a>
+* <a href="https://www.npmjs.com/package/agendize#initialization">Initialization</a>
+* <a href="https://www.npmjs.com/package/agendize#available-functions">Available Functions</a>
+    * <a href="https://www.npmjs.com/package/agendize#reseller-api">Reseller API</a>
+        * <a href="https://www.npmjs.com/package/agendize#create-accounts">Create accounts</a>
+        * <a href="https://www.npmjs.com/package/agendize#check-if-an-email-is-already-used">Check if an email is already used</a>
 
 ## Prerequisites
 * Have an Agendize Account
