@@ -2,7 +2,7 @@
 
 ## Summary
 * [Overview](#markdown-header-overview)
-* [Features](#markdown-header-Features)
+* [Features](#markdown-header-features)
   * [Authentication](#markdown-header-Features)
   * [Reseller API](#markdown-header-Reseller)
   * [Account API](#markdown-header-Account)
