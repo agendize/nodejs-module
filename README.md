@@ -45,6 +45,70 @@ var agendizeApi = new Agendize(options)
 You can manage multiple accounts under a partner Agendize account.
 
 * Create accounts
+`agendizeApi.createAccount(options,callback)` 
+with required option:
+```
+options = {
+	account:{
+		email:'email_of_the_account@email.com'
+	}
+}
+```
+options can be:
+
+```
+options:{
+		account:{
+			email:/*String*/,
+			password:"password"
+		},
+		staff:[
+		{
+			FirstName:"Angelina",
+			LastName:"Julie",
+			Email:"example@"
+		}
+		],
+		company:{
+			name:companyName
+		},
+		services:[{
+			name:"Service 1",
+			price:30,
+			duration:60
+		},
+		{
+			name:"Service 2",
+			duration:120,
+			price:45
+		}],
+		buttons:[
+		{
+			name:'Book an appoitment'
+		}]
+		,
+		clients:[
+		{
+			firstName:'Robert',
+			lastName:'Raford',
+			address:{
+				street:'37-3 Main St, Flushing',
+				zipCode:'11354',
+				city:'New York',
+				country:'United States'
+			},
+			emailAddresses:[
+			{
+				primary:true,
+				email:'robertrafprd@example.com'
+			}]
+		}],
+		appointments:[todayAppointmentDate,tomorrowAppointmentDate],
+		paymentProfile:paymentProfile
+	}
+}
+```
+
 * Check if an email is already used
 * Desactive an account
 * Change the plan of an account
