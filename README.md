@@ -43,12 +43,9 @@ Most of the functions available will have the form:
 ```
 agendizeAPI.doSomethingWith(options,callback);
 ```
-**options**
-options is the input of the function and is discribed into each function description.
+* options is the input of the function and is discribed into each function description.
 
-**callback**
-
-Callback object if an asynchronously called function with error and result objects.
+* callback object is an asynchronously called function with error and result objects.
 
 ```agendizeApi.createAccount(options,function(error,result){
 	if(error){
