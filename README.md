@@ -48,7 +48,7 @@ agendizeAPI.doSomethingWith(options,callback);
 * callback object is an asynchronously called function with error and result objects.
 
 ``` 
-agendizeApi.createAccount(options,function(error,result){
+agendizeApi.doSomethingWith(options,function(error,result){
 	if(error){
 		//do something with the error
 	}else{
@@ -58,9 +58,9 @@ agendizeApi.createAccount(options,function(error,result){
 
 ```  
 
-result object will contain the resulted created objects depending on the options parameter. See Agendize developers documentation for each resource body. 
+**result** object will contain the resulted created objects depending on the options parameter. See Agendize developers documentation for each resource body. 
 
-Error object
+**error** object 
 
 ##Available Functions
  
@@ -68,6 +68,7 @@ Error object
 You can manage multiple accounts under a partner Agendize account.
 
 #### Create accounts
+
 function:
 `agendizeApi.createAccount(options,callback)` 
 with required option:
@@ -81,6 +82,7 @@ options = {
 options can be:
 
 ```
+
 options:{
 		account:{
 			email:String,
@@ -134,6 +136,8 @@ options:{
 		}
 	}
 }
+
+```
 
 Note that according to Agendize objects management:
 * buttons creation need company
