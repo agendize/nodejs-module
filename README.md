@@ -44,7 +44,8 @@ var agendizeApi = new Agendize(options)
 ###Reseller API
 You can manage multiple accounts under a partner Agendize account.
 
-* Create accounts
+#### Create accounts
+function:
 `agendizeApi.createAccount(options,callback)` 
 with required option:
 ```
@@ -111,10 +112,19 @@ options:{
 	}
 }
 ```
+and callback a asynchronously called function with error and result objects.
+`agendizeApi.createAccount(options,function(error,result){
+	if(error){
+		//do something with the error
+	}else{
+		//do something with the result
+	}
+})` 
+
 
 Note that according to Agendize objects management:
-- buttons creation need company
-- appointments creation need staff, service and client.
+* buttons creation need company
+* appointments creation need staff, service and client.
 
 * Check if an email is already used
 * Desactive an account
