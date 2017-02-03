@@ -166,8 +166,8 @@ options = {
 `result` is set to `true`, or `false`, depending on if the email is known, or not, by Agendize.
 
 #### Desactive an account
-```agendizeApi.
-		agendizeFunction:desactiveAccount(options,function(error){
+```
+agendizeApi.desactiveAccount(options,function(error){
 
 })
 ```
@@ -177,7 +177,6 @@ options = {
 	account_id:Int
 }
 ```
-
 
 #### Change the plan of an account
 ```
