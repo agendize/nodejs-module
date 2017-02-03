@@ -77,8 +77,6 @@ agendizeApi.doSomethingWith(options,function(error,result){
 You can manage multiple accounts under a partner Agendize account.
 
 #### Create accounts
-
-function:
 `agendizeApi.createAccount(options,callback)` 
 with required option:
 ```
@@ -153,6 +151,22 @@ Note that according to Agendize objects management:
 * appointments creation need staff, service and client.
 
 #### Check if an email is already used
+`agendizeApi.checkIfAccountExist(options,callback)` 
+with required option:
+```
+options = {
+	email:'email_of_the_account@email.com'
+}
+```
+
+the returned callback is:
+```
+callback = function(error,result){
+
+}
+```
+result is set to true, or false, depending on if the email is known, or not, by Agendize.
+
 #### Desactive an account
 #### Change the plan of an account
 
