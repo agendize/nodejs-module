@@ -17,13 +17,14 @@ This module handles both partner authentication and application oAuth2 authentic
 
 ##Initialization
 ### You want to distribute and manage accounts under a partner Agendize edition.
-:::javascript
+```
 var Agendize = require('agendize');
 var options = {
 	apiKey:'abc123def456ghi789jkl',
 	token:'mno123pqr456stu789vwz'
 }
 var agendize_reseller_api = new Agendize(options)
+```
 
 ##Available Functions
  
