@@ -13,9 +13,7 @@ This module handles both partner authentication and application oAuth2 authentic
     * [Online Scheduling API](#markdown-header-online)
 
 ##Installation
-<code>
-npm install -g agendize
-<code>
+`npm install -g agendize`
 
 ##Initialization
 ##Available Functions
