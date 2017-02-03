@@ -16,14 +16,27 @@ This module handles both partner authentication and application oAuth2 authentic
 `npm install -g agendize`
 
 ##Initialization
-### You want to distribute and manage accounts under a partner Agendize edition.
+### Your Agendize application manages multiple accounts
+As mentioned in the developer documentation, authentication will be handled by ssoToken and apiKey.
 ```
 var Agendize = require('agendize');
 var options = {
-	apiKey:'abc123def456ghi789jkl',
-	token:'mno123pqr456stu789vwz'
+	apiKey:'abc1xxxxxxxxxxxxxx9jkl',
+	token:'mno1xxxxxxxxxxxxxx9vwz'
 }
-var agendize_reseller_api = new Agendize(options)
+var agendizeApi = new Agendize(options)
+```
+###Your Agendize application manages multiple accounts
+Authentication will be done following the oAuth2 processus. According to the documentation you will need a client ID, a client Secret and a Callback URL.
+
+```
+var Agendize = require('agendize');
+var options = {
+	client_id:'abc1xxxxxxxxxxxxxx9jkl',
+	client_secret:'mno1xxxxxxxxxxxxxx9vwz',
+	callback_url:'https://your.application.com/your/callback/path'
+}
+var agendizeApi = new Agendize(options)
 ```
 
 ##Available Functions
