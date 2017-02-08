@@ -8,16 +8,29 @@ This module handles both partner authentication and application oAuth2 authentic
 * <a href="https://www.npmjs.com/package/prerequisites">Prerequisites</a>
 * <a href="https://www.npmjs.com/package/agendize#installation">Installation</a>
 * <a href="https://www.npmjs.com/package/agendize#initialization">Initialization</a>
+* <a href="https://www.npmjs.com/package/agendize#how-it-works">How it works</a>
+* <a href="https://www.npmjs.com/package/agendize#authentication">Authentication</a>
 * <a href="https://www.npmjs.com/package/agendize#available-functions">Available Functions</a>
     * <a href="https://www.npmjs.com/package/agendize#reseller-api">Reseller API</a>
         * <a href="https://www.npmjs.com/package/agendize#create-accounts">Create accounts</a>
         * <a href="https://www.npmjs.com/package/agendize#check-if-an-email-is-already-used">Check if an email is already used</a>
+        * <a href="https://www.npmjs.com/package/agendize#desactive-an-account">Desactive an account</a>
+        * <a href="https://www.npmjs.com/package/agendize#change-the-plan-of-an-account">Change the plan of an account</a>
+    * <a href="https://www.npmjs.com/package/agendize#account-api">Account API</a>
+        * <a href="https://www.npmjs.com/package/agendize#get-account-information">Get account information</a>
+    * <a href="https://www.npmjs.com/package/agendize#online-scheduling-api">Online scheduling API</a>
+        * <a href="https://www.npmjs.com/package/agendize#get-companies">Get Companies</a>
+        * <a href="https://www.npmjs.com/package/agendize#get-clients">Get Clients</a>
+        * <a href="https://www.npmjs.com/package/agendize#get-staffs">Get Staffs</a>
+        * <a href="https://www.npmjs.com/package/agendize#create-appointment">Create appointment</a>
+            * <a href="https://www.npmjs.com/package/agendize#create-appointment-with-ids">Create appointment with ids</a>
+            * <a href="https://www.npmjs.com/package/agendize#create-appointment-with-ids">Create appointment with appointment</a>
 
 ## Prerequisites
 * Have an Agendize Account
 * Requesting your API key to our wonderful Support team
 
-- if you are a partner distributing Agendize accounts, you also need to request a SSO Token to our support team.
+    *if you are a pa rtner distributing Agendize accounts, you also need to request a SSO Token to our support team.
 
 * Finally understand how Agendize objects are working together. What is an Account? a Company, Service, Staff, Client or Appointment. 
 
@@ -71,6 +84,13 @@ agendizeApi.doSomethingWith(options,function(error,result){
 **result** object will contain the resulted created objects depending on the options parameter. See Agendize developers documentation for each resource body. 
 
 **error** object 
+
+##Authentication
+* If you are managing multiple accounts.
+Then access the reseller API following the bellow documentation.
+When accessing the Account or Scheduling APIs, insert the property `sso_token` inside the `options` object with the value of the account's `sso_token` you want to manage.
+
+* However if you work with oAuth2, insert the property `access_token` inside the `options` object with the value of the user's `access_token` you want to manage the account of.
 
 ##Available Functions
  
@@ -157,7 +177,7 @@ agendizeApi.checkIfAccountExist(options,function(error,result){
 
 })
 ```
-with required option:
+with required `option`:
 ```
 options = {
 	email:'email_of_the_account@email.com'
@@ -172,7 +192,7 @@ agendizeApi.desactiveAccount(options,function(error){
 
 })
 ```
-with required option:
+with required `ption`:
 ```
 options = {
 	account_id:Int
@@ -185,7 +205,7 @@ agendizeApi.changePlan(options,function(error,result){
 
 })
 ```
-with required option:
+with required `option`:
 ```
 options = {
 	account_id:Int,
@@ -197,13 +217,151 @@ options = {
 
 ###Account API
 
-#### Get account information
+####Get account information
+```
+agendizeApi.getAccount(options,function(error,result){
+
+})
+```
+with required `option`:
+* If you are working with oAuth2:
+```
+options = {
+	access_token:"abcdefg12345678qabcdefgh"
+}
+
+```
+`result` will be the Agendize account resource of the `access_token` user owner.
+
+However if you are a reseller and managing multiple accounts:
+```
+options = {
+	sso_token:"abcdefg12345678qabcdefgh"
+}
+
+```
+`result` will be the Agendize account resource of the `sso_token` user owner.
 
 ###Online Scheduling API
-#### Get Companies of an account
-#### Get Clients of an account
-#### Get Staffs of a company
+####Get Companies
+```
+agendizeApi.getCompanies(options,function(error,result){
+
+})
+```
+with required `option`:
+* If you are working with oAuth2:
+```
+options = {
+	access_token:"abcdefg12345678qabcdefgh"
+}
+
+```
+`result` will be the Agendize company resource list of the `access_token`'s user's account.
+
+However if you are a reseller and managing multiple accounts:
+```
+options = {
+	sso_token:"abcdefg12345678qabcdefgh"
+}
+
+```
+`result` will be the Agendize company resource list of the sso_token user owner.
+
+####Get Clients
+```
+agendizeApi.getClients(options,function(error,result){
+
+})
+```
+with required `option`:
+* If you are working with oAuth2:
+```
+options = {
+	access_token:"abcdefg12345678qabcdefgh"
+}
+
+```
+`result` will be the Agendize client resource list of the `access_token`'s user's account.
+
+However if you are a reseller and managing multiple accounts:
+```
+options = {
+	sso_token:"abcdefg12345678qabcdefgh"
+}
+
+```
+`result` will be the Agendize client resource list of the sso_token user owner.
+
+####Get Staffs
+```
+agendizeApi.getClients(options,function(error,result){
+
+})
+```
+with required `option`:
+* If you are working with oAuth2:
+```
+options = {
+	access_token:"abcdefg12345678qabcdefgh",
+	company_id:"1234567"
+}
+
+```
+`result` will be the Agendize staff resource list of the `access_token`'s user's account related to the company id indicated.
+
+However if you are a reseller and managing multiple accounts:
+```
+options = {
+	sso_token:"abcdefg12345678qabcdefgh"
+	company_id:"1234567"
+}
+
+```
+`result` will be the Agendize client resource list of the sso_token user owner related to the company id indicated.
+
 #### Create appointment
+
+##### Create appointment with ids
+```
+agendizeApi.createAppointment(options,function(error,result){
+
+})
+```
+
+`options` required attributes:
+```
+options = {
+	sso_token:String,
+	company_id:String,
+	staff_id:String,
+	client_id:String,
+	service_id:String,
+	date:Date
+}
+
+```
+`result` will be the created appointment resource;
+
+##### Create appointment with appointment
+
+```
+agendizeApi.createAppointmentWithAppointment(options,function(error,result){
+
+})
+```
+
+`options` required attributes:
+```
+options = {
+	sso_token:"abcdefg12345678qabcdefgh"
+	appointment:{
+
+	}
+}
+
+```
+`result` will be the created appointment resource;
 
 ### Click to call API
 #### Make a click-to-call call 
