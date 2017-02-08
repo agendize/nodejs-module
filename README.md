@@ -383,29 +383,7 @@ options = {
 ```
 #Run the examples
 You will need to have an Agendize developer account to use the examples then follow the bellow steps:
-####Go to the example project folder for instance `cd examples/click-to-call`
-####Install the needed npm modules with the command: `npm install`
-####Set the credentials of the agendize module in the index.js file
-#####if you manage multiple accounts
-```
-var serviceAgendize = new agendize(
-	{
-		apiKey:"qwert123qwety123",
-		token:"abcdefgh123456789"
-	}
-)
-```
-
-or
-#####if you are building an oauth2 app:
-```
-var serviceAgendize = new agendize(
-	{
-		client_id:"qwert123qwety123",
-		client_secret:"abcdefgh123456789",
-		callback_url:"https://your-application-callback-url.com"
-	}
-)
-```
-
-####Start the application with `node index.js`
+- Go to the example project folder for instance `cd examples/click-to-call`
+- Install the needed npm modules with the command: `npm install`
+- Set the credentials of the agendize module in the index.js file
+- Start the application with `node index.js`
