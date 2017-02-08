@@ -383,10 +383,10 @@ options = {
 ```
 #Run the examples
 You will need to have an Agendize developer account to use the examples then follow the bellow steps:
-*Go to the example project folder for instance `cd examples/click-to-call`
-*Install the needed npm modules with the command: `npm install`
-*Set the credentials
-    *if you manage multiple accounts
+-Go to the example project folder for instance `cd examples/click-to-call`
+-Install the needed npm modules with the command: `npm install`
+-Set the credentials of the agendize module in the index.js file
+    -if you manage multiple accounts
 ```
 var serviceAgendize = new agendize(
 	{
