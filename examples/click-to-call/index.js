@@ -2,7 +2,12 @@ process.env.AGENDIZE_MODULE_DEBUG_LEVEL = 3;
 
 var agendize = require('../../../agendize-module');
 
-var serviceAgendize = new agendize({apiKey:"toto",token:"toto"})
+var serviceAgendize = new agendize(
+	{
+		apiKey:"qwert123qwety123",
+		token:"abcdefgh123456789"
+	}
+)
 
 serviceAgendize.call(
 	{
