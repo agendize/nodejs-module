@@ -1,4 +1,5 @@
 process.env.AGENDIZE_MODULE_DEBUG_LEVEL = 2;
+
 process.env.AGZ_API_HOST = "api.agendize.com"
 
 var agendize = require('../../');

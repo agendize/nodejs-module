@@ -1,3 +1,4 @@
+*.log
 node_modules/
 examples/reseller/node_modules/
 examples/click-to-call/node_modules/
