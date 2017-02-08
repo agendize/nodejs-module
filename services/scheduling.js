@@ -1,5 +1,5 @@
 var errors = require('../errors');
-var logger = require('winston'); 
+var logger = require('../logger'); 
 
 var schedulingAPI = require('../api').scheduling;
 
@@ -15,7 +15,7 @@ this.getAccount = schedulingAPI.getAccount;
 var that = this;
 
 this.createAppointment = function(options,credentials,callback){
-      logger.warn("should have create appoitnment from Ids." +JSON.stringify(options))
+      logger.log(logger.LEVEL_WARN,"should have create appoitnment from Ids." +JSON.stringify(options))
 
 //companyId,staffId,clientId,serviceId,date
   if(options && options.appointment && options.appointment.client){
@@ -29,7 +29,7 @@ this.createAppointment = function(options,credentials,callback){
 
     var appointment = new Appointment(clientId,serviceId,staffId,date)
 
-    logger.warn("should have create appoitnment from Ids." +JSON.stringify(appointment))
+    logger.log(logger.LEVEL_WARN,"should have create appoitnment from Ids." +JSON.stringify(appointment))
    
     schedulingAPI.createAppointment(
     {
@@ -211,7 +211,7 @@ callback(null,{})
     var buttons = options.buttons;
     var companyId = options.company_id;
 
-    logger.info("AgendizeServices createButtons STARTING")
+    logger.log(logger.LEVEL_INFO,"AgendizeServices createButtons STARTING")
 
     var agzButtons = [];
     var agzError = null;
@@ -265,7 +265,7 @@ this.createServices = function(options,credentials,callback){
   var agzServices = [];
   var agzError = null;
 
-  logger.info("Agendize services - createServices() Started" )
+  logger.log(logger.LEVEL_INFO,"Agendize services - createServices() Started" )
 
   function doCreationService(i){
 
@@ -311,7 +311,7 @@ this.createServices = function(options,credentials,callback){
 */
 this.getCompanies = function(credentials,callback){
 
-  logger.info("AgendizeAPI - getCompanies() started with credentials")
+  logger.log(logger.LEVEL_INFO,"AgendizeAPI - getCompanies() started with credentials")
 
   schedulingAPI.getCompanies(credentials,function(err,responseObj){
     if(err)

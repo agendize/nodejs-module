@@ -1,7 +1,7 @@
 var resellerAPI = require('../api').reseller;
 var schedulingServices = require('./scheduling.js');
 var errors = require('../errors');
-var logger = require('winston'); 
+var logger = require('../logger'); 
 
 this.checkIfAccountExist = resellerAPI.checkIfAccountExist;
 this.desactiveAccount = resellerAPI.desactiveAccount;
@@ -10,9 +10,10 @@ this.changePlan = resellerAPI.changePlan;
 this.createAccount = function(options,credentials,callback){
   var signup = options;
 
-  logger.warn("Agendize Reseller Services, createAccount starting with credentials "+JSON.stringify(credentials));
+  logger.log(logger.LEVEL_DEBUG,"Agendize Reseller Services, createAccount starting with credentials "+JSON.stringify(credentials));
   
   var agz_signup = {};
+
   agz_signup.errors = {
     staffs : [],
     services : [],
@@ -33,6 +34,7 @@ this.createAccount = function(options,credentials,callback){
         credentials.token = agz_signup.account.ssoToken;
 
         if(!signup.company){
+          logger.log(logger.LEVEL_DEBUG,"Agendize reseller services ended the signup")
           callback(null,agz_signup);
           return;
         }
@@ -132,15 +134,15 @@ this.createAccount = function(options,credentials,callback){
                       if(signup.appointments && signup.appointments.length >0){
 
                         if(!agz_signup.clients || agz_signup.clients.length<1){
-                          logger.warn("Try to create an appointment but no clients")
+                          logger.log(logger.LEVEL_WARN,"Try to create an appointment but no clients")
                           callback(null,agz_signup);
                           return;
                         }else if(!agz_signup.services || agz_signup.services.length<1){
-                          logger.warn("Try to create an appointment but no services")
+                          logger.log(logger.LEVEL_WARN,"Try to create an appointment but no services")
                           callback(null,agz_signup);
                           return;
                         }else if(!agz_signup.staffs || agz_signup.staffs.length<1){
-                          logger.warn("Try to create an appointment but no staff")
+                          logger.log(logger.LEVEL_WARN,"Try to create an appointment but no staff")
                           callback(null,agz_signup);
                           return;
                         }

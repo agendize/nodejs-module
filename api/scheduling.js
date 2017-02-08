@@ -1,4 +1,4 @@
-var logger = require('winston');
+var logger = require('../logger');
 var errors = require('../errors');
 // var thirdPartyServices = require('../global/thirdPartyServices.js');
 var httpsClient = require('../network');
@@ -6,10 +6,12 @@ var httpsClient = require('../network');
 var http = require('http');
 var querystring = require('querystring');
 
+
+
 const AGZ_API_HOST = process.env.AGZ_API_HOST;
 // const AGZ_API_HOST = 'az2.agendize.com'
 
-	function doAgendizeRequest(method,path,data,credentials,callback,debug){
+	function doAgendizeRequest(method,path,data,credentials,callback){
 
 		var headers = {};
 
@@ -28,19 +30,19 @@ const AGZ_API_HOST = process.env.AGZ_API_HOST;
 			callback(new errors.BadRequest("Missing credentials to do Agendize API Request"))
 		}
 
-		httpsClient.doRequest(data,AGZ_API_HOST,path,method,headers,callback,debug)
+		httpsClient.doRequest(data,AGZ_API_HOST,path,method,headers,callback)
 
 	}	
 
 
 	this.createCompany = function(options,credentials,callback){
 
-		logger.info("AgendizeSchedulingAPI - createCompany() started ")
+		logger.log(logger.LEVEL_INFO,"AgendizeSchedulingAPI - createCompany() started ")
 
 		var company = options.company;
 
 		if(!company.hasOwnProperty('name')){
-			logger.warn("crashed cause bad input: missing name")
+			logger.log(logger.LEVEL_WARN,"crashed cause bad input: missing name")
 			callback(new errors.BadRequest('company creation error missing entry parameter : name'))
 			return;
 		}
@@ -96,7 +98,7 @@ const AGZ_API_HOST = process.env.AGZ_API_HOST;
 
 		doAgendizeRequest('POST','/api/2.0/scheduling/companies',data,credentials,function(err,result){
 
-			logger.info("AgendizeSchedulingAPI - createCompany() finished")
+			logger.log(logger.LEVEL_INFO,"AgendizeSchedulingAPI - createCompany() finished")
 
 
 			if(err)
@@ -109,19 +111,19 @@ const AGZ_API_HOST = process.env.AGZ_API_HOST;
 	}
 
 	this.createStaff = function(options,credentials,callback){
-		logger.info("AgendizeSchedulingAPI - createStaff() started ")
+		logger.log(logger.LEVEL_INFO,"AgendizeSchedulingAPI - createStaff() started ")
 
 		var staff = options.staff;
 		var companyId = options.company_id
 
 		if(!staff.hasOwnProperty('Email')){
-			logger.warn("crashed cause bad input: missing staff email")
+			logger.log(logger.LEVEL_ERROR,"crashed cause bad input: missing staff email")
 			callback(new errors.BadRequest('staff creation error missing entry parameter : staff.email'))
 			return;
 		}
 
 		if(!staff.hasOwnProperty('LastName')){
-			logger.warn("crashed cause bad input: missing staff LastName")
+			logger.log(logger.LEVEL_ERROR,"crashed cause bad input: missing staff LastName")
 			callback(new errors.BadRequest('staff creation error missing entry parameter : staff.LastName'))
 			return;
 		}
@@ -136,7 +138,7 @@ const AGZ_API_HOST = process.env.AGZ_API_HOST;
 
 		doAgendizeRequest('POST','/api/2.0/scheduling/companies/'+companyId+'/staff',data,credentials,function(err,result){
 
-			logger.info("AgendizeSchedulingAPI - createStaff() finished")
+			logger.log(logger.LEVEL_INFO,"AgendizeSchedulingAPI - createStaff() finished")
 
 			if(err){
 				callback(err)
@@ -149,19 +151,19 @@ const AGZ_API_HOST = process.env.AGZ_API_HOST;
 	}
 
 	this.createService= function(options,credentials,callback){
-		logger.info("AgendizeSchedulingAPI - createService() started")
+		logger.log(logger.LEVEL_INFO,"AgendizeSchedulingAPI - createService() started")
 
 		var service = options.service;
 		var companyId = options.company_id;
 
 		if(!service.hasOwnProperty('name')){
-			logger.warn("crashed cause bad input: missing service name")
+			logger.log(logger.LEVEL_WARN,"crashed cause bad input: missing service name")
 			callback(new errors.BadRequest('service creation error missing entry parameter : service.name'))
 			return;
 		}
 
 		if(!service.hasOwnProperty('duration')){
-			logger.warn("crashed cause bad input: missing service duration")
+			logger.log(logger.LEVEL_WARN,"crashed cause bad input: missing service duration")
 			callback(new errors.BadRequest('service creation error missing entry parameter : service.duration'))
 			return;
 		}
@@ -173,7 +175,7 @@ const AGZ_API_HOST = process.env.AGZ_API_HOST;
 		var data = service;
 
 		doAgendizeRequest('POST','/api/2.0/scheduling/companies/'+companyId+'/services',data,credentials,function(err,result){
-			logger.info("AgendizeSchedulingAPI - createService() finished")
+			logger.log(logger.LEVEL_INFO,"AgendizeSchedulingAPI - createService() finished")
 
 			if(err)
 				callback(err)
@@ -184,7 +186,7 @@ const AGZ_API_HOST = process.env.AGZ_API_HOST;
 	}
 
   	this.createAppointment= function(options,credentials,callback){
-		logger.info("AgendizeBusinessAPI - createAppointment() started with options"+JSON.stringify(options));
+		logger.log(logger.LEVEL_INFO,"AgendizeBusinessAPI - createAppointment() started with options"+JSON.stringify(options));
 
 		var appointment = options.appointment;
 		var companyId = options.company_id;
@@ -192,7 +194,7 @@ const AGZ_API_HOST = process.env.AGZ_API_HOST;
 		var data = appointment;
 
  		doAgendizeRequest('POST','/api/2.0/scheduling/companies/'+companyId+'/appointments',data,credentials,function(err,res){
-			logger.info("AgendizeBusinessAPI - createAppointment() finished")
+			logger.log(logger.LEVEL_INFO,"AgendizeBusinessAPI - createAppointment() finished")
 			callback(err,res)
 		})
 
@@ -200,12 +202,12 @@ const AGZ_API_HOST = process.env.AGZ_API_HOST;
 
 
 	this.createClient= function(options,credentials,callback){
-		logger.info("AgendizeSchedulingAPI - createClient() started")
+		logger.log(logger.LEVEL_INFO,"AgendizeSchedulingAPI - createClient() started")
 
 		var client = options.client;
 
 		if(!client.hasOwnProperty('lastName')){
-			logger.warn("crashed cause bad input: missing client lastName")
+			logger.log(logger.LEVEL_WARN,"crashed cause bad input: missing client lastName")
 			callback(new errors.BadRequest('service creation error missing entry parameter : client.lastName'))
 			return;
 		}
@@ -213,7 +215,7 @@ const AGZ_API_HOST = process.env.AGZ_API_HOST;
 		var data = client;
 
 		doAgendizeRequest('POST','/api/2.0/clients',data,credentials,function(err,result){
-			logger.info("AgendizeSchedulingAPI - createClient() finished")
+			logger.log(logger.LEVEL_INFO,"AgendizeSchedulingAPI - createClient() finished")
 
 			if(err)
 				callback(err)
@@ -229,7 +231,7 @@ const AGZ_API_HOST = process.env.AGZ_API_HOST;
 		var button = options.button;
 		var companyId = options.company_id
 
-		logger.info("AgendizeSchedulingAPI - createButton STARTING with companyId "+companyId)
+		logger.log(logger.LEVEL_INFO,"AgendizeSchedulingAPI - createButton STARTING with companyId "+companyId)
 
 		var data = {
 			name:button.name,
@@ -240,7 +242,7 @@ const AGZ_API_HOST = process.env.AGZ_API_HOST;
 			if(err)
 				callback(err)
 			else{
-				logger.info("AgendizeSchedulingAPI - createButton() finished")
+				logger.log(logger.LEVEL_INFO,"AgendizeSchedulingAPI - createButton() finished")
 
 				if(!result || !result.hasOwnProperty('id'))
 					callback(new errors.AgendizeAPI('Agendize api returned a button resource without id'))
@@ -257,7 +259,7 @@ const AGZ_API_HOST = process.env.AGZ_API_HOST;
 		var buttonId = options.button_id;
 		var phoneNumber = options.number;
 
-		logger.info("AgendizeSchedulingAPI - callTheSales() started")
+		logger.log(logger.LEVEL_INFO,"AgendizeSchedulingAPI - call() started")
 
 		var options = {
 			hostname: 'api.agendize.com',
@@ -269,23 +271,29 @@ const AGZ_API_HOST = process.env.AGZ_API_HOST;
 				'Content-Length': Buffer.byteLength(querystring.stringify({}))
 			}
 		};
-
+		
 		var reqCall = http.request(options, (res) => {
 
 			res.setEncoding('utf8');
 			var body =[]; 
 			res.on('data', (chunk) => {
+				logger.log(logger.LEVEL_INFO,"new chunk "+chunk)
 				body.push(chunk);
 			});
 			res.on('end', () => {
-								logger.info("AgendizeSchedulingAPI - callTheSales() finished")
+				logger.log(logger.LEVEL_INFO,"AgendizeSchedulingAPI - call() finished")
 
-				if(res.statusCode!=200){
-					logger.warn("problem when doing the callTheSales agz api request "+body)
-					callback(new errors.AgendizeAPI("Problem when calling Agendize API to do a click to call. statusCode "+res.statusCode))
+				if(res.statusCode!=200){					
+					var error = new errors.AgendizeAPI("Problem when calling Agendize API to do a click to call. statusCode "+res.statusCode,res.body,res.statusCode); 
+					logger.log(logger.LEVEL_ERROR,error.message);
+
+					if(callback)
+						callback(error);
+					else
+						throw error;
 				}
 				else{
-					logger.info("Click to call AGZ API succeeded")
+					logger.log(logger.LEVEL_INFO,"Click to call AGZ API succeeded")
 					callback(null);
 				}
 			})
@@ -299,20 +307,20 @@ const AGZ_API_HOST = process.env.AGZ_API_HOST;
 	}
 
 	this.getCompanies = function(credentials,callback){
-		logger.info("AgendizeSchedulingAPI - getCompanies() started")
+		logger.log(logger.LEVEL_INFO,"AgendizeSchedulingAPI - getCompanies() started")
 
 		doAgendizeRequest('GET','/api/2.0/scheduling/companies',null,credentials,function(err,res){
-			logger.info("AgendizeSchedulingAPI - getCompanies() finished")
+			logger.log(logger.LEVEL_INFO,"AgendizeSchedulingAPI - getCompanies() finished")
 			callback(err,res)
 		})
 	}
 
 	this.getAccount = function(credentials,callback){
 
-		logger.info("AgendizeSchedulingAPI - getAccountFromAgendize() started with credentials "+JSON.stringify(credentials))
+		logger.log(logger.LEVEL_INFO,"AgendizeSchedulingAPI - getAccountFromAgendize() started with credentials "+JSON.stringify(credentials))
 
 		doAgendizeRequest('GET','/api/2.0/accounts',null,credentials,function(err,res){
-			logger.info("AgendizeSchedulingAPI - getAccountFromAgendize() finished")
+			logger.log(logger.LEVEL_INFO,"AgendizeSchedulingAPI - getAccountFromAgendize() finished")
 			callback(err,res)
 		})
 
@@ -320,20 +328,20 @@ const AGZ_API_HOST = process.env.AGZ_API_HOST;
 
 
   this.getClients = function(credentials,callback){
-		logger.info("AgendizeBusinessAPI - getClients() started")
+		logger.log(logger.LEVEL_INFO,"AgendizeBusinessAPI - getClients() started")
 
   		doAgendizeRequest('GET','/api/2.0/clients',null,credentials,function(err,res){
-			logger.info("AgendizeBusinessAPI - getClients() finished")
+			logger.log(logger.LEVEL_INFO,"AgendizeBusinessAPI - getClients() finished")
 			callback(err,res)
 		})
 
   }
 
   this.getStaffs = function(options,credentials,callback){
-		logger.info("AgendizeBusinessAPI - getStaffs() started")
+		logger.log(logger.LEVEL_INFO,"AgendizeBusinessAPI - getStaffs() started")
 		var companyId = options.company_id;
   		doAgendizeRequest('GET','/api/2.0/scheduling/companies/'+companyId+'/staff',null,credentials,function(err,res){
-			logger.info("AgendizeBusinessAPI - getStaffs() finished")
+			logger.log(logger.LEVEL_INFO,"AgendizeBusinessAPI - getStaffs() finished")
 			callback(err,res)
 		})
 

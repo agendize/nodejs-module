@@ -1,11 +1,13 @@
 'use strict';
 
 module.exports = function UnauthorizedError(message, extra) {
-  Error.captureStackTrace(this, this.constructor);
-  this.name = this.constructor.name;
-  this.message = message;
-  this.extra = extra?extra:null;
-  this.code = 403;
+	var er = new Error;
+  Error.captureStackTrace(er, er.constructor);
+  er.name = this.constructor.name;
+  er.message = message;
+  er.extra = extra?extra:null;
+  er.code = 403;
+
 };
 
 require('util').inherits(module.exports, Error);

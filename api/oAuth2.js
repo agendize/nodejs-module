@@ -1,4 +1,4 @@
-var logger = require('winston');
+var logger = require('../logger');
 var errors = require('../errors');
 var httpsClient = require('../network');
 

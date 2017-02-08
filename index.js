@@ -1,4 +1,4 @@
-var logger = require('winston');
+var logger = require('./logger');
 var services = require('./services');
 var errors = require('./errors');
 
@@ -65,9 +65,17 @@ var commonFunctions = {
 
 // function that return an error if the input does not contain all the required fields
 function checkInputs(functionName,input,requiredFields){
+	if(requiredFields && !input){
+		var error = new errors.BadRequest('Agendize Module - You need to attach the properties '+JSON.stringify(requiredFields)+' calling function '+functionName);
+		logger.log(logger.LEVEL_ERROR,error);
+		return error;
+	}
+
 	for(var i in requiredFields){
 		if(!input.hasOwnProperty(requiredFields[i])){
-			return new errors.BadRequest('Agendize Module - Missing Param '+requiredFields[i]+' in input function '+functionName)
+			var error =  new errors.BadRequest('Agendize Module - Missing Param '+requiredFields[i]+' in input function '+functionName)
+			logger.log(logger.LEVEL_ERROR,error);
+			return error;
 		}
 	}
 	return null;
@@ -77,18 +85,21 @@ function checkInputs(functionName,input,requiredFields){
 //Extract sso_token from input options (if reseller) or access_token (if application)
 var _apiFunction = function(functionToInstanciate,credentials,isReseller){
 	var that = this;
+
 	that.function = functionToInstanciate;
 
 	return function(options,callback){
 
-		logger.warn("Agendize Module Execute "+that.function.agendizeService+'.'+that.function.agendizeFunction);
+		logger.log(logger.LEVEL_INFO,"Agendize Module Execute "+that.function.agendizeService+'.'+that.function.agendizeFunction);
 
-		if(that.requiredParams)
+		if(that.function.requiredParams)
 			var error = checkInputs(that.function.name,options,that.function.requiredParams);
 
 		if(error){
-			callback(error)
-			return;
+			if(callback)
+				callback(error)
+			else
+				throw error;
 		}
 
 		var _credentials = credentials;
@@ -103,10 +114,13 @@ var _apiFunction = function(functionToInstanciate,credentials,isReseller){
 					delete options.sso_token;
 			}
 		}else{
-
 			if(!options || !options.hasOwnProperty('access_token')){
-				callback(new errors.BadRequest('Agendize Module - Missing access_token to do the request'));
-				return;
+				var error = new errors.BadRequest('Agendize Module - Missing access_token to do the request');
+				if(callback)
+					callback(error);
+				else
+					throw error;
+
 			}else{
 				_credentials = {
 					access_token:options.access_token
@@ -117,7 +131,6 @@ var _apiFunction = function(functionToInstanciate,credentials,isReseller){
 					delete options.access_token;
 			}
 		}
-
 
 		if(options)
 			services[that.function.agendizeService][that.function.agendizeFunction](options,_credentials,callback);				
@@ -130,7 +143,7 @@ var _apiFunction = function(functionToInstanciate,credentials,isReseller){
 
 function agendize(moduleEntry){
 
-	logger.warn('Agendize initialized with options: '+JSON.stringify(moduleEntry));
+	logger.log(logger.LEVEL_WARN,'Agendize initialized with options: '+JSON.stringify(moduleEntry));
 
 	var isReseller;
 
@@ -146,7 +159,6 @@ function agendize(moduleEntry){
 	var credentials = moduleEntry;
 
 	var Agendize = {};
-
 	Agendize.createSSO = services.createSSO;
 
 	for(var i in commonFunctions){
@@ -189,6 +201,6 @@ function agendize(moduleEntry){
 
 	return Agendize;
 }
-
 module.exports = agendize;
+module.exports.errors = errors;
 

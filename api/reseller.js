@@ -1,4 +1,4 @@
-var logger = require('winston');
+var logger = require('../logger');
 var errors = require('../errors');
 // var thirdPartyServices = require('../global/thirdPartyServices.js');
 var httpsClient = require('../network');
@@ -8,13 +8,13 @@ const AGZ_API_HOST = process.env.AGZ_API_HOST;
 const AGZ_ROLE_SCHEDULER = "scheduler"
 
 
-	function doAgendizeRequest(method,path,data,credentials,callback,debug,acceptBadCode){
+	function doAgendizeRequest(method,path,data,credentials,callback,acceptBadCode){
 
 		if(!credentials || !credentials.hasOwnProperty('apiKey') || !credentials.hasOwnProperty('token')){
 			throw new errors.BadRequest('Reseller API requests need api key and token');
 		}
 
-		httpsClient.doRequest(data,AGZ_API_HOST,path,method,credentials,callback,debug,acceptBadCode)
+		httpsClient.doRequest(data,AGZ_API_HOST,path,method,credentials,callback,acceptBadCode)
 
 	}
 
@@ -22,7 +22,7 @@ const AGZ_ROLE_SCHEDULER = "scheduler"
 		var accountId = options.account_id;
 		var destinationPlan = options.destination_plan;
 
-		logger.info("agendizeAPI - changePlan for STARTING with account "+accountId+" and desination plan "+JSON.stringify(destinationPlan))
+		logger.log(logger.LEVEL_INFO,"agendizeAPI - changePlan for STARTING with account "+accountId+" and desination plan "+JSON.stringify(destinationPlan))
 
 		var data = {
 			profile:{
@@ -47,7 +47,7 @@ const AGZ_ROLE_SCHEDULER = "scheduler"
 
 		var accountId = options.account_id;
 
-		logger.info("agendizeAPI - desactiveAccount for STARTING with account "+accountId)
+		logger.log(logger.LEVEL_INFO,"agendizeAPI - desactiveAccount for STARTING with account "+accountId)
 
 		var data = {
 			status:"disabled"
@@ -68,7 +68,7 @@ const AGZ_ROLE_SCHEDULER = "scheduler"
 
 	this.createAccount = function(options,credentials,callback){
 
-		logger.info("agendizeAPI - createAccount for STARTING")
+		logger.log(logger.LEVEL_INFO,"agendizeAPI - createAccount for STARTING")
 
 		var account = options.account;
 		var paymentProfile = options.paymentProfile;
@@ -97,13 +97,13 @@ const AGZ_ROLE_SCHEDULER = "scheduler"
 
 	this.checkIfAccountExist = function(options,credentials,callback){
 
-		logger.info("AgendizeAPI - checkIfAccountExist() STARTING")
+		logger.log(logger.LEVEL_INFO,"AgendizeAPI - checkIfAccountExist() STARTING")
 
 		var email = encodeURIComponent(options.email);
 
 		doAgendizeRequest('GET','/api/2.0/resellers/accounts',{userName:email},credentials,function(err,result){
 		
-		logger.info("AgendizeAPI - checkIfAccountExist() finished")
+		logger.log(logger.LEVEL_INFO,"AgendizeAPI - checkIfAccountExist() finished")
 
 		//This error is now checked to see if it's a real error or if the account does not exists or exist but attached to another reseller account
 		if(err){
@@ -124,7 +124,7 @@ const AGZ_ROLE_SCHEDULER = "scheduler"
 		}
 
 
-	},true,true)
+	},true)
 
 }
 
