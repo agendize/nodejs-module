@@ -25,6 +25,8 @@ This module handles both partner authentication and application oAuth2 authentic
         * <a href="https://www.npmjs.com/package/agendize#create-appointment">Create appointment</a>
             * <a href="https://www.npmjs.com/package/agendize#create-appointment-with-ids">Create appointment with ids</a>
             * <a href="https://www.npmjs.com/package/agendize#create-appointment-with-ids">Create appointment with appointment</a>
+* <a href="https://www.npmjs.com/package/agendize#run-the-examples">Run the examples</a>
+
 
 ## Prerequisites
 * Have an Agendize Account
@@ -365,4 +367,19 @@ options = {
 
 ### Click to call API
 #### Make a click-to-call call 
+You need to have a click to call button on the Agendize account.
+```
+agendizeApi.call(options,function(error,result){
+
+})
+```
+
+`options` required attributes:
+```
+options = {
+	button_id:"123456789",
+	number:"+1555555555"
+}
+```
+#Run the examples
 

@@ -10,16 +10,11 @@ this.tokenRequest = function(data,callback){
 		if(error)
 			callback(error)
 		else{
-			// try {
-				var tokens = JSON.parse(result);
-				callback(null,tokens);
-			// } catch(e) {
-			// 	callback(new errors.AgendizeAPI("Error e:"+e+"Problem when trying to get oauth2 tokens, when doing post request response was not json formated. Response was: "+result))
-			// }
+			var tokens = JSON.parse(result);
+			callback(null,tokens);
 		}
 	});
 }
-
 
 
 module.exports = this;
