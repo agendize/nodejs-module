@@ -4,30 +4,6 @@ Agendize NPM Module
 This is a node.js module to interact with Agendize APIs. Agendize API documentation is available here: http://developers.agendize.com/. 
 This module handles both partner authentication and application oAuth2 authentication modes.
 
-## Summary
-* <a href="https://www.npmjs.com/package/prerequisites">Prerequisites</a>
-* <a href="https://www.npmjs.com/package/agendize#installation">Installation</a>
-* <a href="https://www.npmjs.com/package/agendize#initialization">Initialization</a>
-* <a href="https://www.npmjs.com/package/agendize#how-it-works">How it works</a>
-* <a href="https://www.npmjs.com/package/agendize#authentication">Authentication</a>
-* <a href="https://www.npmjs.com/package/agendize#available-functions">Available Functions</a>
-    * <a href="https://www.npmjs.com/package/agendize#reseller-api">Reseller API</a>
-        * <a href="https://www.npmjs.com/package/agendize#create-accounts">Create accounts</a>
-        * <a href="https://www.npmjs.com/package/agendize#check-if-an-email-is-already-used">Check if an email is already used</a>
-        * <a href="https://www.npmjs.com/package/agendize#desactive-an-account">Desactive an account</a>
-        * <a href="https://www.npmjs.com/package/agendize#change-the-plan-of-an-account">Change the plan of an account</a>
-    * <a href="https://www.npmjs.com/package/agendize#account-api">Account API</a>
-        * <a href="https://www.npmjs.com/package/agendize#get-account-information">Get account information</a>
-    * <a href="https://www.npmjs.com/package/agendize#online-scheduling-api">Online scheduling API</a>
-        * <a href="https://www.npmjs.com/package/agendize#get-companies">Get Companies</a>
-        * <a href="https://www.npmjs.com/package/agendize#get-clients">Get Clients</a>
-        * <a href="https://www.npmjs.com/package/agendize#get-staffs">Get Staffs</a>
-        * <a href="https://www.npmjs.com/package/agendize#create-appointment">Create appointment</a>
-            * <a href="https://www.npmjs.com/package/agendize#create-appointment-with-ids">Create appointment with ids</a>
-            * <a href="https://www.npmjs.com/package/agendize#create-appointment-with-ids">Create appointment with appointment</a>
-* <a href="https://www.npmjs.com/package/agendize#run-the-examples">Run the examples</a>
-
-
 ## Prerequisites
 * Have an Agendize Account
 * Requesting your API key to our wonderful Support team
