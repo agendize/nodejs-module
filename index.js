@@ -78,6 +78,9 @@ function checkInputs(functionName,input,requiredFields){
 			return error;
 		}
 	}
+
+
+
 	return null;
 }
 
@@ -96,8 +99,10 @@ var _apiFunction = function(functionToInstanciate,credentials,isReseller){
 			var error = checkInputs(that.function.name,options,that.function.requiredParams);
 
 		if(error){
-			if(callback)
+			if(callback){
 				callback(error)
+				return;
+			}
 			else
 				throw error;
 		}
@@ -143,7 +148,8 @@ var _apiFunction = function(functionToInstanciate,credentials,isReseller){
 
 function agendize(moduleEntry){
 
-	logger.log(logger.LEVEL_WARN,'Agendize initialized with options: '+JSON.stringify(moduleEntry));
+	logger.log(logger.LEVEL_INFO,'Initialization!');
+	logger.log(logger.LEVEL_DEBUG,'Init starting with  options: '+JSON.stringify(moduleEntry));
 
 	var isReseller;
 
@@ -153,12 +159,14 @@ function agendize(moduleEntry){
 		moduleEntry.hasOwnProperty('callback_url')){
 		isReseller = false;
 	}else{
+		logger.log(logger.LEVEL_ERROR,'Init failed. see documentation of the module at https://www.npmjs.com/package/agendize#initialization');
 		throw(new Error("Agendize Module cannot be initialized"));
 	}
 	
 	var credentials = moduleEntry;
 
 	var Agendize = {};
+
 	Agendize.createSSO = services.createSSO;
 
 	for(var i in commonFunctions){
@@ -198,6 +206,8 @@ function agendize(moduleEntry){
 			services.oauth2.tokenRequest(data,callback);
 		}
 	}
+
+	logger.log(logger.LEVEL_DEBUG,'Agendize module initialization terminating');
 
 	return Agendize;
 }

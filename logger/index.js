@@ -2,6 +2,8 @@ var winston = require('winston');
 
 var logger = new winston.Logger({
     level: 'debug',
+    colorize:true,
+    'timestamp':true,
      transports: [
       new (winston.transports.Console)()
       ]

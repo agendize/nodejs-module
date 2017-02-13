@@ -15,7 +15,7 @@ this.getAccount = schedulingAPI.getAccount;
 var that = this;
 
 this.createAppointment = function(options,credentials,callback){
-      logger.log(logger.LEVEL_WARN,"should have create appoitnment from Ids." +JSON.stringify(options))
+  logger.log(logger.LEVEL_WARN,"should have create appoitnment from Ids." +JSON.stringify(options))
 
 //companyId,staffId,clientId,serviceId,date
   if(options && options.appointment && options.appointment.client){
@@ -211,7 +211,7 @@ callback(null,{})
     var buttons = options.buttons;
     var companyId = options.company_id;
 
-    logger.log(logger.LEVEL_INFO,"AgendizeServices createButtons STARTING")
+    logger.log(logger.LEVEL_DEBUG,"AgendizeServices createButtons STARTING")
 
     var agzButtons = [];
     var agzError = null;
@@ -265,7 +265,7 @@ this.createServices = function(options,credentials,callback){
   var agzServices = [];
   var agzError = null;
 
-  logger.log(logger.LEVEL_INFO,"Agendize services - createServices() Started" )
+  logger.log(logger.LEVEL_DEBUG,"Agendize services - createServices() Started" )
 
   function doCreationService(i){
 
@@ -311,7 +311,7 @@ this.createServices = function(options,credentials,callback){
 */
 this.getCompanies = function(credentials,callback){
 
-  logger.log(logger.LEVEL_INFO,"AgendizeAPI - getCompanies() started with credentials")
+  logger.log(logger.LEVEL_DEBUG,"AgendizeAPI - getCompanies() started with credentials")
 
   schedulingAPI.getCompanies(credentials,function(err,responseObj){
     if(err)

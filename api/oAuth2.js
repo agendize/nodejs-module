@@ -4,7 +4,7 @@ var httpsClient = require('../network');
 
 this.tokenRequest = function(data,callback){
 	
-	logger.info("AgendizeAPI - getTokenFromAgendize() started")
+	logger.log(logger.LEVEL_DEBUG,"AgendizeAPI - getTokenFromAgendize() started")
 	
 	httpsClient.doPostRequestFormDataType(data,'app.agendize.com','/o/oauth2/token',function(error,result){
 		if(error)

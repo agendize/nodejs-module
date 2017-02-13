@@ -51,7 +51,7 @@ exports.doPostRequestFormDataType = function(data,host,path,callback){
 
 
 exports.doRequest = function(data,host,path,method,headers,callback,acceptBadResponses){
-		logger.log(logger.LEVEL_INFO,"Agendize Network - doRequest() started");
+		logger.log(logger.LEVEL_DEBUG,"Agendize Network - doRequest() started");
 		logger.log(logger.LEVEL_DEBUG,"Agendize Network - doRequest() started with host:"+host+" path:"+path+" data:"+JSON.stringify(data)+" method:"+method);
 
 	var isGET = method == 'GET';
@@ -109,7 +109,7 @@ exports.doRequest = function(data,host,path,method,headers,callback,acceptBadRes
 
 		res.on('end', () => {
 
-			logger.log(logger.LEVEL_INFO,"Network: get answer of agendize api with statusCode "+res.statusCode)
+			logger.log(logger.LEVEL_DEBUG,"Network: get answer of agendize api with statusCode "+res.statusCode)
 
 			if(res.statusCode!=200 && !acceptBadResponses){
 				logger.log(logger.LEVEL_WARN,"Network: Agendize API responded not 200.")
@@ -128,10 +128,10 @@ exports.doRequest = function(data,host,path,method,headers,callback,acceptBadRes
 			result = JSON.parse(body.join(""));
 
 			if(result.hasOwnProperty('error')&&!acceptBadResponses){
-				logger.log(logger.LEVEL_ERROR,"result of "+host+path+" request is an error "+JSON.stringify(result.error))
+				logger.log(logger.LEVEL_DEBUG,"result of "+host+path+" request is an error "+JSON.stringify(result.error))
 				callback(new errors.AgendizeAPI(JSON.stringify(result.error),result,res.statusCode))
 			}else if(result.hasOwnProperty('error')){
-				logger.log(logger.LEVEL_INFO,"result of "+host+path+" request is an error "+JSON.stringify(result.error))
+				logger.log(logger.LEVEL_DEBUG,"result of "+host+path+" request is an error "+JSON.stringify(result.error))
 				callback(result.error)
 				return;
 			}

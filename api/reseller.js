@@ -1,10 +1,7 @@
 var logger = require('../logger');
 var errors = require('../errors');
-// var thirdPartyServices = require('../global/thirdPartyServices.js');
 var httpsClient = require('../network');
-
 const AGZ_API_HOST = process.env.AGZ_API_HOST;
-// const AGZ_API_HOST = 'az2.agendize.com'
 const AGZ_ROLE_SCHEDULER = "scheduler"
 
 
@@ -22,7 +19,7 @@ const AGZ_ROLE_SCHEDULER = "scheduler"
 		var accountId = options.account_id;
 		var destinationPlan = options.destination_plan;
 
-		logger.log(logger.LEVEL_INFO,"agendizeAPI - changePlan for STARTING with account "+accountId+" and desination plan "+JSON.stringify(destinationPlan))
+		logger.log(logger.LEVEL_DEBUG,"agendizeAPI - changePlan for STARTING with account "+accountId+" and desination plan "+JSON.stringify(destinationPlan))
 
 		var data = {
 			profile:{
@@ -47,7 +44,7 @@ const AGZ_ROLE_SCHEDULER = "scheduler"
 
 		var accountId = options.account_id;
 
-		logger.log(logger.LEVEL_INFO,"agendizeAPI - desactiveAccount for STARTING with account "+accountId)
+		logger.log(logger.LEVEL_DEBUG,"agendizeAPI - desactiveAccount for STARTING with account "+accountId)
 
 		var data = {
 			status:"disabled"
@@ -68,7 +65,7 @@ const AGZ_ROLE_SCHEDULER = "scheduler"
 
 	this.createAccount = function(options,credentials,callback){
 
-		logger.log(logger.LEVEL_INFO,"agendizeAPI - createAccount for STARTING")
+		logger.log(logger.LEVEL_DEBUG,"agendizeAPI - createAccount for STARTING")
 
 		var account = options.account;
 		var paymentProfile = options.paymentProfile;
@@ -97,33 +94,33 @@ const AGZ_ROLE_SCHEDULER = "scheduler"
 
 	this.checkIfAccountExist = function(options,credentials,callback){
 
-		logger.log(logger.LEVEL_INFO,"AgendizeAPI - checkIfAccountExist() STARTING")
+		logger.log(logger.LEVEL_DEBUG,"AgendizeAPI - checkIfAccountExist() STARTING")
 
 		var email = encodeURIComponent(options.email);
 
 		doAgendizeRequest('GET','/api/2.0/resellers/accounts',{userName:email},credentials,function(err,result){
 		
-		logger.log(logger.LEVEL_INFO,"AgendizeAPI - checkIfAccountExist() finished")
+			logger.log(logger.LEVEL_DEBUG,"AgendizeAPI - checkIfAccountExist() finished")
 
-		//This error is now checked to see if it's a real error or if the account does not exists or exist but attached to another reseller account
-		if(err){
-			logger.warn("checkIfAccountExist")
-			if(err.code == 404){
-				callback(null,{exists:false})
-			}
-			else if(err.code == 403){
-				callback(null,{exists:true})
+			//This error is now checked to see if it's a real error or if the account does not exists or exist but attached to another reseller account
+			if(err){
+				if(err.code == 404){
+					logger.log(logger.LEVEL_DEBUG,"AgendizeAPI - checkIfAccountExist() finished and answered false")
+					callback(null,{exists:false})
+				}
+				else if(err.code == 403){
+					logger.log(logger.LEVEL_DEBUG,"AgendizeAPI - checkIfAccountExist() finished and answered true")
+					callback(null,{exists:true})
+				}
+				else{
+					logger.log(logger.LEVEL_ERROR,"Error returned by AGZ API and assimilate as real error when checkIfAccountExist")
+					callback(err)
+				}
 			}
 			else{
-				logger.warn("Error returned by AGZ API and assimilate as real error when checkIfAccountExist")
-				callback(err)
+				logger.log(logger.LEVEL_DEBUG,"AgendizeAPI - checkIfAccountExist() finished and answered true")
+				callback(null,{exists:true})
 			}
-		}
-		else{
-			callback(null,{exists:true})
-		}
-
-
 	},true)
 
 }
