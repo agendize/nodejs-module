@@ -226,8 +226,8 @@ function agendize(moduleEntry){
 		moduleEntry.hasOwnProperty('callback_url')){
 		isReseller = false;
 	}else{
-		logger.log(logger.LEVEL_WARN,'Init failed. the module will have reduced features. See documentation of the module at https://www.npmjs.com/package/agendize#initialization');
-		//throw(new Error("Agendize Module cannot be initialized"));
+		logger.log(logger.LEVEL_ERROR,'Init failed. see documentation of the module at https://www.npmjs.com/package/agendize#initialization');
+		throw(new Error("Agendize Module cannot be initialized"));
 	}
 	
 	var credentials = moduleEntry;
