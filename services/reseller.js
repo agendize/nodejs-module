@@ -5,7 +5,11 @@ var logger = require('../logger');
 
 this.checkIfAccountExist = resellerAPI.checkIfAccountExist;
 this.desactiveAccount = resellerAPI.desactiveAccount;
+this.activeAccount = resellerAPI.activeAccount;
 this.changePlan = resellerAPI.changePlan;
+this.getAccounts = resellerAPI.getAccounts;
+this.removeAccount = resellerAPI.removeAccount;
+this.updateAccount = resellerAPI.updateAccount;
 
 this.createAccount = function(options,credentials,callback){
   var signup = options;
@@ -22,7 +26,7 @@ this.createAccount = function(options,credentials,callback){
     appointments:[]
   };  
 
-  resellerAPI.createAccount(options,credentials,function(error,result){
+  resellerAPI.createAccount(signup,credentials,function(error,result){
     if(error)
       callback(error)    
     else{
@@ -52,11 +56,11 @@ this.createAccount = function(options,credentials,callback){
               agz_signup.company = result;
 
               if(!signup.staff || signup.staff == 'undefined' || signup.staff.length == []){
-
                signup.staff = [{
-                Email:signup.account.email,
-                FirstName:signup.account.firstname?signup.account.firstname:'Staff',
-                LastName:signup.account.lastname?signup.account.lastname:signup.account.email
+                email:signup.account.email,
+                firstname:signup.account.firstname?signup.account.firstname:'Staff',
+                lastname:signup.account.lastname?signup.account.lastname:signup.account.email,
+                role:'none'
               }]
             }
 
@@ -94,25 +98,7 @@ this.createAccount = function(options,credentials,callback){
                   agz_signup.services.push(resultServices[i])
               }
 
-              if(signup.buttons && signup.buttons.length > 0){
-
-                schedulingServices.createButtons(
-                  {
-                    buttons:signup.buttons,
-                    company_id:agz_signup.company.id
-                  },
-                  credentials,function(errorButtons,resultButtons){
-
-                  agz_signup.buttons = [];
-
-                  for(var i=0; i<resultButtons.length; i++){
-                    if(resultButtons[i].error)
-                      agz_signup.errors.buttons.push(resultButtons[i])
-                    else
-                      agz_signup.buttons.push(resultButtons[i])
-                  }
-
-                  if(signup.clients && signup.clients.length>0){
+               if(signup.clients && signup.clients.length>0){
 
                     schedulingServices.createClients(
                     {
@@ -126,10 +112,28 @@ this.createAccount = function(options,credentials,callback){
                       for(var i=0; i<resultClients.length; i++){
 
                         if(resultClients[i].error)
-                          agz_signup.errors.buttons.push(resultClients[i])
+                          agz_signup.errors.clients.push(resultClients[i])
                         else
                           agz_signup.clients.push(resultClients[i])
                       }
+
+                    if(signup.buttons && signup.buttons.length > 0){
+
+                      schedulingServices.createButtons(
+                        {
+                          buttons:signup.buttons,
+                          company_id:agz_signup.company.id
+                        },
+                        credentials,function(errorButtons,resultButtons){
+
+                        agz_signup.buttons = [];
+
+                        for(var i=0; i<resultButtons.length; i++){
+                          if(resultButtons[i].error)
+                            agz_signup.errors.buttons.push(resultButtons[i])
+                          else
+                            agz_signup.buttons.push(resultButtons[i])
+                        }
 
                       if(signup.appointments && signup.appointments.length >0){
 

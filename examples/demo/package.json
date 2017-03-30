@@ -1,0 +1,23 @@
+{
+  "name": "agendize-module-demo",
+  "version": "1.0.0",
+  "description": "A demonstration of how can be used the agendize npm module",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"no test yet!\" && exit 1",
+    "start": "node index.js"
+  },
+  "keywords": [
+    "agendize",
+    "module",
+    "example"
+  ],
+  "author": "Jean-Philippe Lingrand",
+  "license": "MIT",
+  "dependencies": {
+    "ejs": "*",
+    "express": "*",
+    "winston": "*",
+    "bower":"*"
+  }
+}

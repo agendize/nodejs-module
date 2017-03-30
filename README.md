@@ -96,9 +96,9 @@ options:{
 		},
 		staff:[
 		{
-			FirstName:String,
-			LastName:String,
-			Email:String
+			firstname:String,
+			lastname:String,
+			email:String
 		}
 		],
 		company:{
@@ -121,8 +121,8 @@ options:{
 		,
 		clients:[
 		{
-			firstName:String,
-			lastName:String,
+			firstname:String,
+			lastname:String,
 			address:{
 				street:String,
 				zipCode:String,

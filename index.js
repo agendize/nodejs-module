@@ -1,18 +1,34 @@
+var pjson = require('./package.json');
+console.log("Agendize-module version "+pjson.version)
+
 var logger = require('./logger');
 var services = require('./services');
 var errors = require('./errors');
 
 // Functions available for reseller accounts
-var resellerFunctions = {
+var availableFunctions = {
+	'getAccounts':{
+		agendizeService:'reseller',
+		agendizeFunction:'getAccounts',
+	},
 	'createAccount':{
 		agendizeService:'reseller',
 		agendizeFunction:'createAccount',
 		requiredParams:['account','payment_profile']
 	},
+	'removeAccount':{
+		agendizeService:'reseller',
+		agendizeFunction:'removeAccount',
+		requiredParams:['id']
+	},
 	'checkIfAccountExist':{
 		agendizeFunction:'checkIfAccountExist',
 		agendizeService:'reseller',
 		requiredParams:['email']
+	},'activeAccount':{
+		agendizeFunction:'activeAccount',
+		agendizeService:'reseller',
+		requiredParams:['account_id']
 	},
 	'desactiveAccount':{
 		agendizeFunction:'desactiveAccount',
@@ -32,11 +48,7 @@ var resellerFunctions = {
 	'getCompanies':{
 		agendizeFunction:'getCompanies',
 		agendizeService:'scheduling'
-	}
-}
-
-// Functions available for both Reseller and Applications types usage
-var commonFunctions = {
+	},
 	'createAppointment':{
 		agendizeService:'scheduling',
 		agendizeFunction:'createAppointment',
@@ -59,9 +71,44 @@ var commonFunctions = {
 	'getAccount':{
 		agendizeFunction:'getAccount',
 		agendizeService:'scheduling'
+	},
+	'createWebhookForAppointments':{
+		agendizeFunction:'createWebhook',
+		agendizeService:'scheduling',
+		requiredParams:['company_id','webhook']
+	},
+	'deleteWebhook':{
+		agendizeFunction:'deleteWebhook',
+		agendizeService:'account',
+		requiredParams:['webhook_id']
+	},
+	'createWebhookForCalls':{
+		agendizeFunction:'createWebhookForCalls',
+		agendizeService:'account',
+		requiredParams:['webhook']
+	},
+	'createWebhookForForms':{
+		agendizeFunction:'createWebhookForForms',
+		agendizeService:'account',
+		requiredParams:['webhook']
+	},
+	'createWebhookForChat':{
+		agendizeFunction:'createWebhookForChat',
+		agendizeService:'account',
+		requiredParams:['webhook']
+	},
+	'updateSettings':{
+		agendizeFunction:'updateSettings',
+		agendizeService:'scheduling',
+		requiredParams:['company_id','settings']
+	},
+	'updateAccount':{
+		agendizeFunction:'updateAccount',
+		agendizeService:'reseller',
+		requiredParams:['account_id','account']
 	}
-
 }
+
 
 // function that return an error if the input does not contain all the required fields
 function checkInputs(functionName,input,requiredFields){
@@ -79,8 +126,6 @@ function checkInputs(functionName,input,requiredFields){
 		}
 	}
 
-
-
 	return null;
 }
 
@@ -95,6 +140,11 @@ var _apiFunction = function(functionToInstanciate,credentials,isReseller){
 
 		logger.log(logger.LEVEL_INFO,"Agendize Module Execute "+that.function.agendizeService+'.'+that.function.agendizeFunction);
 
+		if(!callback || typeof callback == "undefined"){
+			callback = options;
+			options = null;
+		}
+
 		if(that.function.requiredParams)
 			var error = checkInputs(that.function.name,options,that.function.requiredParams);
 
@@ -107,7 +157,11 @@ var _apiFunction = function(functionToInstanciate,credentials,isReseller){
 				throw error;
 		}
 
-		var _credentials = credentials;
+		var _credentials = {}
+
+		for(var i in credentials){
+			_credentials[i]=credentials[i];
+		}
 		
 		if(isReseller){
 			if(options && options.sso_token){
@@ -135,15 +189,28 @@ var _apiFunction = function(functionToInstanciate,credentials,isReseller){
 				else
 					delete options.access_token;
 			}
+
+			if(options.hasOwnProperty('apiKey')){
+				_credentials = {
+					apiKey:options.apiKey
+				}
+				if(Object.keys(options).length == 1)
+					options=null;
+				else
+					delete options.apiKey;
+			}
 		}
 
-		if(options)
+		if(options && typeof options != "undefined" ){
+			logger.log(logger.LEVEL_DEBUG,"Execute function with credentials: "+JSON.stringify(_credentials)+" and with options "+JSON.stringify(options));
 			services[that.function.agendizeService][that.function.agendizeFunction](options,_credentials,callback);				
-		else
+		}
+		else{
+			logger.log(logger.LEVEL_DEBUG,"Execute function with credentials: "+JSON.stringify(_credentials)+" but no options options")
 			services[that.function.agendizeService][that.function.agendizeFunction](_credentials,callback);				
+		}
 	}
 }
-
 
 
 function agendize(moduleEntry){
@@ -167,23 +234,13 @@ function agendize(moduleEntry){
 
 	var Agendize = {};
 
-	Agendize.createSSO = services.createSSO;
-
-	for(var i in commonFunctions){
-		var fct = commonFunctions[i];
+	for(var i in availableFunctions){
+		var fct = availableFunctions[i];
 		fct.name = i;
 	    	Agendize[i] = new _apiFunction(fct,credentials,isReseller);
 	}
 
-	if(isReseller){
-
-		for(var i in resellerFunctions){
-			var fct = resellerFunctions[i];
-			fct.name = i;
-		    	Agendize[i] = new _apiFunction(fct,credentials,isReseller);
-		}
-
-	}else{
+	if(!isReseller){
 
 		Agendize.callback_url = credentials.callback_url;
 
@@ -211,6 +268,8 @@ function agendize(moduleEntry){
 
 	return Agendize;
 }
+
 module.exports = agendize;
 module.exports.errors = errors;
+module.exports.createSSO = services.createSSO;
 

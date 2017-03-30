@@ -11,36 +11,10 @@ this.getStaffs = schedulingAPI.getStaffs;
 this.createAppointment = schedulingAPI.createAppointment;
 this.call = schedulingAPI.call;
 this.getAccount = schedulingAPI.getAccount;
+this.createWebhook = schedulingAPI.createWebhook;
+this.updateSettings = schedulingAPI.updateSettings;
 
 var that = this;
-
-this.createAppointment = function(options,credentials,callback){
-  logger.log(logger.LEVEL_WARN,"should have create appoitnment from Ids." +JSON.stringify(options))
-
-//companyId,staffId,clientId,serviceId,date
-  if(options && options.appointment && options.appointment.client){
-    schedulingAPI.createAppointment(options,credentials,callback);
-  }else{
-    var companyId = options.company_id;
-    var clientId = options.appointment.client_id;
-    var serviceId = options.appointment.service_id;
-    var staffId = options.appointment.staff_id;
-    var date = options.appointment.date;
-
-    var appointment = new Appointment(clientId,serviceId,staffId,date)
-
-    logger.log(logger.LEVEL_WARN,"should have create appoitnment from Ids." +JSON.stringify(appointment))
-   
-    schedulingAPI.createAppointment(
-    {
-      appointment:appointment,
-      company_id:companyId
-    },
-    credentials,
-    callback);
-  }
-
-}
 
 var Appointment = function(clientId,serviceId,staffId,date){
   
@@ -74,6 +48,34 @@ return {
 }
 
 this.Appointment = Appointment;
+
+this.createAppointment = function(options,credentials,callback){
+  logger.log(logger.LEVEL_WARN,"should have create appoitnment from Ids." +JSON.stringify(options))
+
+//companyId,staffId,clientId,serviceId,date
+  if(options && options.appointment && options.appointment.client){
+    schedulingAPI.createAppointment(options,credentials,callback);
+  }else{
+    var companyId = options.company_id;
+    var clientId = options.appointment.client_id;
+    var serviceId = options.appointment.service_id;
+    var staffId = options.appointment.staff_id;
+    var date = options.appointment.date;
+
+    var appointment = new Appointment(clientId,serviceId,staffId,date)
+
+    logger.log(logger.LEVEL_WARN,"should have create appoitnment from Ids." +JSON.stringify(appointment))
+   
+    schedulingAPI.createAppointment(
+    {
+      appointment:appointment,
+      company_id:companyId
+    },
+    credentials,
+    callback);
+  }
+
+}
 
 this.createStaffs= function(options,credentials,callback){
 var staffs = options.staffs;

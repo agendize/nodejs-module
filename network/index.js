@@ -2,6 +2,34 @@ var logger = require('../logger');
 var https = require('https');
 var errors = require('../errors');
 
+
+const AGZ_API_HOST = process.env.AGZ_API_HOST;
+// const AGZ_API_HOST = 'az2.agendize.com'
+
+module.exports.doAgendizeRequest = function(method,path,data,credentials,callback,acceptBadCode){
+
+	var headers = {};
+
+	if(credentials.hasOwnProperty('apiKey') && credentials.hasOwnProperty('token')){
+		headers = {
+			token:credentials.token,
+			apiKey:credentials.apiKey
+		}
+	}else if(credentials.hasOwnProperty('access_token')){
+		
+		headers = {
+			'Authorization':'Bearer '+credentials.access_token
+		}
+
+	}else{
+		callback(new errors.BadRequest("Network manager - doAgendizeRequest: Missing credentials to do Agendize Request"))
+	}
+
+	doRequest(data,AGZ_API_HOST,path,method,headers,callback,acceptBadCode)
+
+}
+
+
 exports.doPostRequestFormDataType = function(data,host,path,callback){
 		var postData=Object.keys(data).map(function(k) {
 			return encodeURIComponent(k) + '=' + (data[k])
@@ -30,13 +58,14 @@ exports.doPostRequestFormDataType = function(data,host,path,callback){
 				body.push(chunk);
 			});
 			res.on('end', () => {
+				logger.log(logger.LEVEL_DEBUG,"httpsClient.doPostRequestFormDataType finished")
+
 				if(res.statusCode!=200){
 					callback(new errors.AgendizeAPI("httpsClient.doPostRequestFormDataType: problem when doing request to host:"+host+" statusCode: "+res.statusCode+' and body: '+body,body,res.statusCode))
 				}
 				else{
 					callback(null,body);
 				}
-				logger.log(logger.LEVEL_DEBUG,"httpsClient.doPostRequestFormDataType finished")
 			})
 		});
 
@@ -50,13 +79,13 @@ exports.doPostRequestFormDataType = function(data,host,path,callback){
 
 
 
-exports.doRequest = function(data,host,path,method,headers,callback,acceptBadResponses){
-		logger.log(logger.LEVEL_DEBUG,"Agendize Network - doRequest() started");
-		logger.log(logger.LEVEL_DEBUG,"Agendize Network - doRequest() started with host:"+host+" path:"+path+" data:"+JSON.stringify(data)+" method:"+method);
+function doRequest(data,host,path,method,headers,callback,acceptBadResponses){
+	logger.log(logger.LEVEL_DEBUG,"Agendize Network - doRequest() started");
+	logger.log(logger.LEVEL_DEBUG,"Agendize Network - doRequest() started with host:"+host+" path:"+path+" data:"+JSON.stringify(data)+" method:"+method);
 
-	var isGET = method == 'GET';
+	var hasDataInURL = method == 'GET' || method == 'DELETE';
 	
-	if(isGET){
+	if(hasDataInURL){
 
 		if(data){
 			path+='?'+Object.keys(data).map(function(k) {
@@ -81,13 +110,14 @@ exports.doRequest = function(data,host,path,method,headers,callback,acceptBadRes
 		head = headers;
 
 	head["Content-Type"] = "application/json";
-	head["Content-Length"] = isGET?0:Buffer.byteLength(postData);
+	head["Content-Length"] = hasDataInURL?0:Buffer.byteLength(postData);
 
 	var options = {
 		path:path,
 		hostname: host,
 		method:method,
-		headers: head
+		headers: head,
+		port: 443,
 	};
 
 	logger.log(logger.LEVEL_DEBUG,"Init request with options: "+JSON.stringify(options))
@@ -147,14 +177,22 @@ exports.doRequest = function(data,host,path,method,headers,callback,acceptBadRes
 		callback(e)
 	});
 
-	logger.log(logger.LEVEL_DEBUG,"trying to "+method+postData?(" data : "+postData):""+" at uri "+options.path+" with headers "+JSON.stringify(options.headers));
+	logger.log(logger.LEVEL_DEBUG,"Method:"+method)
+	if(postData){
+		logger.log(logger.LEVEL_DEBUG,"data : "+postData)
+	}
+	logger.log(logger.LEVEL_DEBUG,"uri: "+options.path)
+	logger.log(logger.LEVEL_DEBUG,"headers "+JSON.stringify(options.headers));
 	
 	// write data to request body
 	if(data && data!=''){
-		logger.log(logger.LEVEL_DEBUG,"Agendize Network Will Write "+postData);
+		logger.log(logger.LEVEL_DEBUG,"Writte data on https request: "+postData);
 		req.write(postData);
+	}else{
+		logger.log(logger.LEVEL_DEBUG,"No data written to the https request");
 	}
-
 	req.end();
 
 }
+
+exports.doRequest = doRequest;
