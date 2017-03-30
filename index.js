@@ -220,9 +220,9 @@ function agendize(moduleEntry){
 
 	var isReseller;
 
-	if(moduleEntry.hasOwnProperty('apiKey') && moduleEntry.hasOwnProperty('token')){
+	if(moduleEntry && moduleEntry.hasOwnProperty('apiKey') && moduleEntry.hasOwnProperty('token')){
 		isReseller = true;
-	}else if(moduleEntry.hasOwnProperty('client_id') && moduleEntry.hasOwnProperty('client_secret') && 
+	}else if(moduleEntry &&  moduleEntry.hasOwnProperty('client_id') && moduleEntry.hasOwnProperty('client_secret') && 
 		moduleEntry.hasOwnProperty('callback_url')){
 		isReseller = false;
 	}else{
