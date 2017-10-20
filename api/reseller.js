@@ -43,7 +43,8 @@ this.changePlan = function(options,credentials,callback){
 		profile:{
 			nativePlan:true,
 			id:destinationPlan
-		}
+		},
+		hostname:options.hostname
 	};
 
 	httpsClient.doAgendizeRequest('POST','/api/2.0/resellers/accounts/'+accountId,data,credentials,function(err,result){
@@ -80,7 +81,8 @@ this.updateAccount = function(options,credentials,callback){
 
 	logger.log(logger.LEVEL_DEBUG,"agendizeAPI - updateAccount for STARTING with account "+accountId+" and desination account "+JSON.stringify(account))
 
-	var data = account
+	var data = account;
+	data.hostname = options.hostname;
 
 	httpsClient.doAgendizeRequest('POST','/api/2.0/resellers/accounts/'+accountId,data,credentials,function(err,result){
 		if(err)
@@ -102,6 +104,7 @@ this.desactiveAccount = function(options,credentials,callback){
 	logger.log(logger.LEVEL_DEBUG,"agendizeAPI - desactiveAccount for STARTING with account "+accountId)
 
 	var data = {
+		hostname:options.hostname,
 		status:"disabled"
 	};
 
@@ -123,9 +126,10 @@ this.activeAccount = function(options,credentials,callback){
 
 	var accountId = options.account_id;
 
-	logger.log(logger.LEVEL_DEBUG,"agendizeAPI - activeAccount for STARTING with account "+accountId)
+	logger.log(logger.LEVEL_DEBUG,"agendizeAPI - activeAccount STARTING with account "+accountId)
 
 	var data = {
+		hostname:options.hostname,
 		status:"enabled"
 	};
 
@@ -143,21 +147,41 @@ this.activeAccount = function(options,credentials,callback){
 
 this.createAccount = function(options,credentials,callback){
 
-	logger.log(logger.LEVEL_DEBUG,"agendizeAPI - createAccount for STARTING")
+	logger.log(logger.LEVEL_DEBUG,"agendizeAPI - createAccount STARTING")
 
-	var account = options.account;
+	// var account = options.account;
 
-	var paymentProfile = options.payment_profile;
+	// var paymentProfile = options.payment_profile;
 
-	var data = {
-		lastName:account.lastname,
-		firstName:account.firstname,
-		email:account.email,
-		password:account.password,
-		preferences:account.preferences,
-		profile:paymentProfile,
-		tools:account.tools
-	};
+	// var data = {
+	// 	hostname:options.hostname,
+	// 	lastName:account.lastname,
+	// 	firstName:account.firstname,
+	// 	email:account.email,
+	// 	password:account.password,
+	// 	preferences:account.preferences,
+	// 	profile:paymentProfile,
+	// 	tools:account.tools,
+	// 	sendSignupEmail:options.sendSignupEmail
+	// };
+
+	data = options.account;
+
+	if(options.payment_profile){
+		data.profile = options.payment_profile;
+	}
+
+	if(options.hostname){
+		data.hostname = options.hostname;
+	}
+
+	if(options.lastname){
+		data.lastName = options.lastname;
+	}
+
+	if(options.firstname){
+		data.firstName = options.firstName;
+	}
 
 	httpsClient.doAgendizeRequest('POST','/api/2.0/resellers/accounts',data,credentials,function(err,result){
 		if(err)
@@ -178,8 +202,12 @@ this.checkIfAccountExist = function(options,credentials,callback){
 	logger.log(logger.LEVEL_DEBUG,"AgendizeAPI - checkIfAccountExist() STARTING")
 
 	var email = encodeURIComponent(options.email);
+	var data = {
+		userName:email,
+		hostname:options.hostname
+	};
 
-	httpsClient.doAgendizeRequest('GET','/api/2.0/resellers/accounts',{userName:email},credentials,function(err,result){
+	httpsClient.doAgendizeRequest('GET','/api/2.0/resellers/accounts',data,credentials,function(err,result){
 	
 		logger.log(logger.LEVEL_DEBUG,"AgendizeAPI - checkIfAccountExist() finished")
 

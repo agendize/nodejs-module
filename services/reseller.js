@@ -43,12 +43,21 @@ this.createAccount = function(options,credentials,callback){
           return;
         }
 
+        if(signup.company.resourceMode){
+            
+            finishCompanyCreationForResource(signup,credentials,agz_signup,callback);
+
+            return;
+
+        }
+
         schedulingServices.createCompany(signup,credentials,function(error,result){
           
           if(error){
             agz_signup.errors.company = error;
             callback(null,agz_signup);
           }
+
           else{
 
             if(result.hasOwnProperty('id')){
@@ -62,6 +71,7 @@ this.createAccount = function(options,credentials,callback){
                 lastname:signup.account.lastname?signup.account.lastname:signup.account.email,
                 role:'none'
               }]
+            
             }
 
             schedulingServices.createStaffs(
@@ -74,7 +84,7 @@ this.createAccount = function(options,credentials,callback){
             agz_signup.staffs = [];
 
             for(var i=0; i<result.length; i++){
-              if(!result[i].error)
+              if(result[i] && !result[i].error)
                 agz_signup.staffs.push(result[i]);
               else
                 agz_signup.errors.staffs.push(result[i])
@@ -209,5 +219,61 @@ else
 }
 
 
+function finishCompanyCreationForResource(signup,credentials,agz_signup,callback){
+
+  signup.company.scheduledItems = 'resource';
+
+   schedulingServices.createCompany(signup,credentials,function(error,result){
+          
+      if(error){
+        agz_signup.errors.company = error;
+        callback(null,agz_signup);
+        return;
+      }
+
+      if(!result.hasOwnProperty('id')){
+        agz_signup.errors.company = new Error('Error creating the company object on Agendize');
+        callback(null,agz_signup);
+        return;
+      }
+      
+      agz_signup.company = result;
+
+      if(!signup.resources){
+          callback(null,agz_signup);
+          return;
+      }
+
+      schedulingServices.createResources(
+        {
+          resources:signup.resources,
+          company_id:agz_signup.company.id
+        },
+        credentials,function(error,result){
+
+          if(error){
+
+             agz_signup.errors.resources = error;
+             callback(null,agz_signup);
+             return;
+          }
+
+        agz_signup.resources = [];
+
+        for(var i=0; i<result.length; i++){
+          if(result[i] && !result[i].error)
+            agz_signup.resources.push(result[i]);
+          else
+            agz_signup.errors.resources.push(result[i])
+        }
+
+        callback(null,agz_signup);
+
+      });
+
+
+    });
+
+}
 
 module.exports = this

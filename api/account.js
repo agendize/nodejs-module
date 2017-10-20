@@ -109,4 +109,17 @@ this.createWebhookForChat=function(options,credentials,callback){
 			callback(null,result)
 	});
 }
+
+this.getPermissions = function(credentials,callback){
+
+	logger.log(logger.LEVEL_DEBUG,"accountAPI - getPermissions() started")
+
+	httpsClient.doAgendizeRequest('GET','/api/2.0/accounts/permissions',{},credentials,function(err,result){
+
+		if(err)
+			callback(err)
+		else
+			callback(null,result)
+	});
+}
 module.exports = this;

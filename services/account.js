@@ -7,4 +7,6 @@ this.deleteWebhook = api.deleteWebhook;
 this.createWebhookForCalls = api.createWebhookForCalls;
 this.createWebhookForForms = api.createWebhookForForms;
 this.createWebhookForChat = api.createWebhookForChat
+this.getPermissions = api.getPermissions
+
 module.exports = this;

@@ -7,6 +7,31 @@ var errors = require('./errors');
 
 // Functions available for reseller accounts
 var availableFunctions = {
+	'createStaff':{
+		agendizeService:'scheduling',
+		agendizeFunction:'createStaff',
+		requiredParams:['staff','company_id']
+	},
+	'createResource':{
+		agendizeService:'scheduling',
+		agendizeFunction:'createResource',
+		requiredParams:['resource','company_id']
+	},
+	'createButton':{
+		agendizeService:'scheduling',
+		agendizeFunction:'createButton',
+		requiredParams:['button','company_id']
+	},
+	'createService':{
+		agendizeService:'scheduling',
+		agendizeFunction:'createService',
+		requiredParams:['service','company_id']
+	},
+	'createServices':{
+		agendizeService:'scheduling',
+		agendizeFunction:'createServices',
+		requiredParams:['services','company_id']
+	},
 	'getAccounts':{
 		agendizeService:'reseller',
 		agendizeFunction:'getAccounts',
@@ -53,6 +78,11 @@ var availableFunctions = {
 		agendizeService:'scheduling',
 		agendizeFunction:'createAppointment',
 		requiredParams:['company_id','staff_id','client_id','service_id','date']
+	},
+	'createCompany':{
+		agendizeService:'scheduling',
+		agendizeFunction:'createCompany',
+		requiredParams:['company']
 	},
 	'createAppointmentWithAppointment':{
 		agendizeFunction:'createAppointment',
@@ -106,6 +136,25 @@ var availableFunctions = {
 		agendizeFunction:'updateAccount',
 		agendizeService:'reseller',
 		requiredParams:['account_id','account']
+	},
+	'createChatButton':{
+		agendizeFunction:'createButton',
+		agendizeService:'chat',
+		requiredParams:['button']
+	},
+	'createStaffsAndServices':{
+		agendizeFunction:'createStaffsAndServices',
+		agendizeService:'scheduling',
+		requiredParams:['staffs','services']
+	},
+	'updateCompany':{
+		agendizeFunction:'updateCompany',
+		agendizeService:'scheduling',
+		requiredParams:['company_id','company']
+	},
+	'getPermissions':{
+		agendizeFunction:'getPermissions',
+		agendizeService:'account'
 	}
 }
 
@@ -167,10 +216,7 @@ var _apiFunction = function(functionToInstanciate,credentials,isReseller){
 			if(options && options.sso_token){
 				_credentials.token = options.sso_token;
 
-				if(Object.keys(options).length == 1)
-					options=null;
-				else
-					delete options.sso_token;
+				delete options.sso_token;
 			}
 		}else{
 			if(!options || !options.hasOwnProperty('access_token')){
@@ -184,29 +230,32 @@ var _apiFunction = function(functionToInstanciate,credentials,isReseller){
 				_credentials = {
 					access_token:options.access_token
 				}
-				if(Object.keys(options).length == 1)
-					options=null;
-				else
-					delete options.access_token;
+				delete options.access_token;
 			}
 
-			if(options.hasOwnProperty('apiKey')){
+			if(options && options.hasOwnProperty('apiKey')){
 				_credentials = {
 					apiKey:options.apiKey
 				}
-				if(Object.keys(options).length == 1)
-					options=null;
-				else
-					delete options.apiKey;
+				
+				delete options.apiKey;
 			}
 		}
 
-		if(options && typeof options != "undefined" ){
+		if(options && options.hasOwnProperty('hostname')){
+			_credentials.hostname = options.hostname;
+			delete options.hostname;
+		}
+
+		if(options && Object.keys(options).length == 0){
+			options=null;
+		}
+
+		if(options){
 			logger.log(logger.LEVEL_DEBUG,"Execute function with credentials: "+JSON.stringify(_credentials)+" and with options "+JSON.stringify(options));
 			services[that.function.agendizeService][that.function.agendizeFunction](options,_credentials,callback);				
-		}
-		else{
-			logger.log(logger.LEVEL_DEBUG,"Execute function with credentials: "+JSON.stringify(_credentials)+" but no options options")
+		}else{
+			logger.log(logger.LEVEL_DEBUG,"Execute function with credentials: "+JSON.stringify(_credentials)+" but no options")
 			services[that.function.agendizeService][that.function.agendizeFunction](_credentials,callback);				
 		}
 	}
@@ -254,10 +303,10 @@ function agendize(moduleEntry){
 		    	data.client_id = credentials.client_id;
 
 		    	if(data.refresh_token){
-				data.grant_type='refresh_token'
+				    data.grant_type='refresh_token'
 		    	}else{
-				data.grant_type='authorization_code'
-				data.redirect_uri = credentials.callback_url;
+                    data.grant_type='authorization_code'
+                    data.redirect_uri = credentials.callback_url;
 		    	}
 				
 			services.oauth2.tokenRequest(data,callback);

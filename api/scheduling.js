@@ -6,7 +6,6 @@ var httpsClient = require('../network');
 var http = require('http');
 var querystring = require('querystring');
 
-
 this.createCompany = function(options,credentials,callback){
 
 	logger.log(logger.LEVEL_DEBUG,"AgendizeSchedulingAPI - createCompany() started ")
@@ -110,6 +109,30 @@ this.createStaff = function(options,credentials,callback){
 	});
 }
 
+
+this.updateCompany = function(options,credentials,callback){
+	logger.log(logger.LEVEL_DEBUG,"AgendizeSchedulingAPI - updateCompany() started ")
+
+	var company = options.company;
+	var companyId = options.company_id
+
+	var data = company;
+
+	httpsClient.doAgendizeRequest('PUT','/api/2.0/scheduling/companies/'+companyId,data,credentials,function(err,result){
+
+		logger.log(logger.LEVEL_DEBUG,"AgendizeSchedulingAPI - updateCompany() finished")
+
+		if(err){
+			callback(err)
+		}
+		else{
+			callback(null,result)
+		}
+
+	});
+}
+
+
 this.createService= function(options,credentials,callback){
 	logger.log(logger.LEVEL_DEBUG,"AgendizeSchedulingAPI - createService() started")
 
@@ -156,6 +179,21 @@ this.createAppointment= function(options,credentials,callback){
 
 		httpsClient.doAgendizeRequest('POST','/api/2.0/scheduling/companies/'+companyId+'/appointments',data,credentials,function(err,res){
 		logger.log(logger.LEVEL_DEBUG,"AgendizeBusinessAPI - createAppointment() finished")
+		callback(err,res)
+	})
+
+}
+
+this.createResource= function(options,credentials,callback){
+	logger.log(logger.LEVEL_DEBUG,"AgendizeBusinessAPI - createResource() started with options"+JSON.stringify(options));
+
+	var resource = options.resource;
+	var companyId = options.company_id;
+
+	var data = resource;
+
+		httpsClient.doAgendizeRequest('POST','/api/2.0/scheduling/companies/'+companyId+'/resources',data,credentials,function(err,res){
+		logger.log(logger.LEVEL_DEBUG,"AgendizeBusinessAPI - createResource() finished")
 		callback(err,res)
 	})
 
@@ -229,7 +267,7 @@ this.call = function(options,credentials,callback){
 	logger.log(logger.LEVEL_DEBUG,"AgendizeSchedulingAPI - call() started")
 
 	var options = {
-		hostname: 'api.agendize.com',
+		hostname: credentials.hostname || process.env.AGZ_API_HOST,
 		port: 80,
 		path: '/api/1.0/action?media=call&id='+buttonId+'&key='+credentials.apiKey+'&phone='+encodeURIComponent(phoneNumber)+'&token='+credentials.token,
 		method: 'GET',

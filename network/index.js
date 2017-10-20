@@ -2,9 +2,7 @@ var logger = require('../logger');
 var https = require('https');
 var errors = require('../errors');
 
-
 const AGZ_API_HOST = process.env.AGZ_API_HOST;
-// const AGZ_API_HOST = 'az2.agendize.com'
 
 module.exports.doAgendizeRequest = function(method,path,data,credentials,callback,acceptBadCode){
 
@@ -25,7 +23,7 @@ module.exports.doAgendizeRequest = function(method,path,data,credentials,callbac
 		callback(new errors.BadRequest("Network manager - doAgendizeRequest: Missing credentials to do Agendize Request"))
 	}
 
-	doRequest(data,AGZ_API_HOST,path,method,headers,callback,acceptBadCode)
+	doRequest(data,credentials.hostname || AGZ_API_HOST,path,method,headers,callback,acceptBadCode)
 
 }
 

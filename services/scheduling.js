@@ -3,6 +3,7 @@ var logger = require('../logger');
 
 var schedulingAPI = require('../api').scheduling;
 
+this.updateCompany = schedulingAPI.updateCompany;
 this.createCompany = schedulingAPI.createCompany;
 this.createStaff = schedulingAPI.createStaff;
 this.createService = schedulingAPI.createService;
@@ -13,6 +14,8 @@ this.call = schedulingAPI.call;
 this.getAccount = schedulingAPI.getAccount;
 this.createWebhook = schedulingAPI.createWebhook;
 this.updateSettings = schedulingAPI.updateSettings;
+this.createButton = schedulingAPI.createButton;
+this.createResource = schedulingAPI.createResource
 
 var that = this;
 
@@ -114,6 +117,48 @@ schedulingAPI.createStaff({
 
 if(staffs.length>0)
 doCreationStaff(0);
+else
+callback(null,{})
+
+}
+
+this.createResources= function(options,credentials,callback){
+var resources = options.resources;
+var companyId = options.company_id;
+
+var agzResource = [];
+var agzError = null;
+
+function doCreationResource(i){
+
+schedulingAPI.createResource({
+  resource:resources[i],
+  company_id:companyId
+},credentials,function(error,result){
+  if(error){
+
+    agzResource.push({
+      resource:resource[i],
+      error:error
+    })
+
+    if(!agzError)
+      agzError = new Error('One or more resource has not been created');
+
+  }else{
+    agzResource.push(result)
+  }
+
+  if(i==resources.length-1){
+    callback(agzError,agzResource)
+  }else{
+    doCreationResource(i+1);
+  }
+})
+}
+
+if(resources.length>0)
+doCreationResource(0);
 else
 callback(null,{})
 
@@ -307,13 +352,14 @@ this.createServices = function(options,credentials,callback){
   callback(null,{})
 }
 
+
 /*
 // 
 //
 */
 this.getCompanies = function(credentials,callback){
 
-  logger.log(logger.LEVEL_DEBUG,"AgendizeAPI - getCompanies() started with credentials")
+  logger.log(logger.LEVEL_DEBUG,"AgendizeAPI - getCompanies() started")
 
   schedulingAPI.getCompanies(credentials,function(err,responseObj){
     if(err)

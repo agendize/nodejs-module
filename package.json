@@ -1,6 +1,6 @@
 {
   "name": "agendize",
-  "version": "0.0.56",
+  "version": "1.0.8",
   "description": "An npm package for Node.Js to interact with Agendize (https://www.agendize.com/) through API (http://developers.agendize.com/). It allows to create accounts under partner accounts. Or easily build an oAuth2 application. Create companies, services, staffs, appointments. Get a SSO url of an account.",
   "main": "index.js",
   "scripts": {
