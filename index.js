@@ -155,6 +155,15 @@ var availableFunctions = {
 	'getPermissions':{
 		agendizeFunction:'getPermissions',
 		agendizeService:'account'
+	},
+	'getCallTrackingNumbers':{
+		agendizeFunction:'get',
+		agendizeService:'call_tracking'
+	},
+	'deleteCallTrackingNumber':{
+		agendizeFunction:'delete',
+		agendizeService:'call_tracking',
+		requiredParams:['line_id']
 	}
 }
 

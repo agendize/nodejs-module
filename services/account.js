@@ -8,5 +8,6 @@ this.createWebhookForCalls = api.createWebhookForCalls;
 this.createWebhookForForms = api.createWebhookForForms;
 this.createWebhookForChat = api.createWebhookForChat
 this.getPermissions = api.getPermissions
+this.createWebhookForAppointments = api.createWebhookForAppointments;
 
 module.exports = this;

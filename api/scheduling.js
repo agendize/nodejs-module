@@ -386,7 +386,7 @@ this.createWebhook= function(options,credentials,callback){
 	});
 }
 
-this.updateSettings= function(options,credentials,callback){
+this.updateSettings = function(options,credentials,callback){
 	
 	logger.log(logger.LEVEL_DEBUG,"AgendizeSchedulingAPI - updateSettings() started with options "+JSON.stringify(options))
 
