@@ -3,7 +3,7 @@ var errors = require('../errors');
 
 var httpsClient = require('../network');
 
-this.get = function(options,credentials,callback){
+this.get = function(credentials,callback){
 
 	logger.log(logger.LEVEL_DEBUG,"AgendizeCallTrackingAPI - get() started ")
 
